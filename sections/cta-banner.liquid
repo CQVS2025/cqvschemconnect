@@ -1,0 +1,119 @@
+<section class="cta-banner" data-section-id="{{ section.id }}" data-section-type="cta-banner">
+  <div class="cta-banner__container container">
+    <div class="cta-banner__content">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="cta-banner__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.button_text != blank -%}
+        <a href="{{ section.settings.button_link }}" class="button cta-banner__button">
+          {{ section.settings.button_text }}
+        </a>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-banner {
+    background: linear-gradient(135deg, var(--color-accent, #00d4aa) 0%, #00b894 100%);
+    padding: 4rem 0;
+    width: 100%;
+  }
+
+  .cta-banner__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .cta-banner__content {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .cta-banner__heading {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: var(--color-bg-dark, #0a0a0a);
+    margin: 0;
+    max-width: 600px;
+    line-height: 1.2;
+  }
+
+  @media (min-width: 768px) {
+    .cta-banner__heading {
+      font-size: 2.5rem;
+    }
+
+    .cta-banner {
+      padding: 5rem 0;
+    }
+  }
+
+  .cta-banner__button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2.5rem;
+    background-color: var(--color-bg-dark, #0a0a0a);
+    color: #ffffff;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    border: none;
+    border-radius: 8px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+  }
+
+  .cta-banner__button:hover {
+    background-color: #1a1a1a;
+    transform: translateY(-2px);
+  }
+
+  .cta-banner__button:active {
+    transform: translateY(0);
+  }
+</style>
+
+{% schema %}
+{
+  "name": "CTA Banner",
+  "class": "section-cta-banner",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Ready to Save on Your Chemical Costs?"
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Button text",
+      "default": "Create Free Account"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "Button link",
+      "default": "/account/register"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTA Banner",
+      "settings": {
+        "heading": "Ready to Save on Your Chemical Costs?",
+        "button_text": "Create Free Account",
+        "button_link": "/account/register"
+      }
+    }
+  ]
+}
+{% endschema %}

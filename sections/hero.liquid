@@ -1,0 +1,348 @@
+{%- liquid
+  assign featured_product = section.settings.featured_product
+  assign badge_text = section.settings.featured_badge_text
+-%}
+
+<section class="hero" data-section-id="{{ section.id }}" data-section-type="hero">
+  <div class="hero__container container">
+    <div class="hero__grid">
+      {%- comment -%} Left Column: Content {%- endcomment -%}
+      <div class="hero__content">
+        {%- if section.settings.heading != blank -%}
+          <h1 class="hero__heading">{{ section.settings.heading }}</h1>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <p class="hero__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+
+        <div class="hero__buttons">
+          {%- if section.settings.primary_button_text != blank -%}
+            <a href="{{ section.settings.primary_button_link }}" class="button button--primary hero__button hero__button--primary">
+              {{ section.settings.primary_button_text }}
+            </a>
+          {%- endif -%}
+
+          {%- if section.settings.secondary_button_text != blank -%}
+            <a href="{{ section.settings.secondary_button_link }}" class="button button--secondary hero__button hero__button--secondary">
+              {{ section.settings.secondary_button_text }}
+            </a>
+          {%- endif -%}
+        </div>
+      </div>
+
+      {%- comment -%} Right Column: Featured Product Card {%- endcomment -%}
+      {%- if featured_product != blank -%}
+        <div class="hero__featured">
+          <div class="hero__product-card">
+            {%- if badge_text != blank -%}
+              <span class="hero__product-badge">{{ badge_text }}</span>
+            {%- endif -%}
+
+            <div class="hero__product-image-wrapper">
+              {%- if featured_product.featured_image != blank -%}
+                <img
+                  src="{{ featured_product.featured_image | image_url: width: 600 }}"
+                  alt="{{ featured_product.featured_image.alt | escape }}"
+                  width="600"
+                  height="600"
+                  loading="eager"
+                  class="hero__product-image"
+                >
+              {%- else -%}
+                {{ 'product-1' | placeholder_svg_tag: 'hero__product-placeholder' }}
+              {%- endif -%}
+            </div>
+
+            <div class="hero__product-info">
+              <h3 class="hero__product-title">
+                <a href="{{ featured_product.url }}">{{ featured_product.title }}</a>
+              </h3>
+
+              <div class="hero__product-price">
+                {%- if featured_product.selected_or_first_available_variant.unit_price -%}
+                  <span class="hero__product-unit-price">
+                    {{ featured_product.selected_or_first_available_variant.unit_price | money }}
+                    <span class="hero__product-unit-separator">/</span>
+                    {{ featured_product.selected_or_first_available_variant.unit_price_measurement.reference_value }}{{ featured_product.selected_or_first_available_variant.unit_price_measurement.reference_unit }}
+                  </span>
+                {%- else -%}
+                  <span class="hero__product-amount">{{ featured_product.price | money }}</span>
+                {%- endif -%}
+              </div>
+
+              {%- if featured_product.available -%}
+                <form method="post" action="/cart/add" class="hero__product-form">
+                  <input type="hidden" name="id" value="{{ featured_product.selected_or_first_available_variant.id }}">
+                  <input type="hidden" name="quantity" value="1">
+                  <button type="submit" class="button button--primary hero__add-to-cart">
+                    {{ 'sections.hero.add_to_cart' | t | default: 'Add to Cart' }}
+                  </button>
+                </form>
+              {%- else -%}
+                <button class="button button--disabled hero__add-to-cart" disabled>
+                  {{ 'sections.hero.sold_out' | t | default: 'Sold Out' }}
+                </button>
+              {%- endif -%}
+            </div>
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    background-color: var(--color-bg-dark, #0a0a0a);
+    padding: 4rem 0;
+    overflow: hidden;
+  }
+
+  .hero__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .hero__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 3rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero__grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+    }
+
+    .hero {
+      padding: 6rem 0;
+    }
+  }
+
+  .hero__content {
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero__content {
+      text-align: left;
+    }
+  }
+
+  .hero__heading {
+    font-size: 2.25rem;
+    font-weight: 800;
+    line-height: 1.1;
+    color: #ffffff;
+    margin: 0 0 1.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .hero__heading {
+      font-size: 3.5rem;
+    }
+  }
+
+  .hero__subheading {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #b0b0b0);
+    margin: 0 0 2rem;
+    max-width: 540px;
+  }
+
+  @media (min-width: 768px) {
+    .hero__subheading {
+      font-size: 1.25rem;
+    }
+  }
+
+  .hero__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  @media (min-width: 768px) {
+    .hero__buttons {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+  }
+
+  .hero__button {
+    min-width: 180px;
+    text-align: center;
+  }
+
+  .hero__featured {
+    display: flex;
+    justify-content: center;
+  }
+
+  .hero__product-card {
+    background-color: var(--color-bg-card, #141414);
+    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    overflow: hidden;
+    width: 100%;
+    max-width: 400px;
+    position: relative;
+    transition: border-color 0.3s ease;
+  }
+
+  .hero__product-card:hover {
+    border-color: var(--color-accent, #00d4aa);
+  }
+
+  .hero__product-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background-color: var(--color-accent, #00d4aa);
+    color: var(--color-bg-dark, #0a0a0a);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    padding: 0.375rem 0.75rem;
+    border-radius: 4px;
+    z-index: 1;
+  }
+
+  .hero__product-image-wrapper {
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
+    background-color: var(--color-bg-dark, #0a0a0a);
+  }
+
+  .hero__product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+  }
+
+  .hero__product-card:hover .hero__product-image {
+    transform: scale(1.05);
+  }
+
+  .hero__product-placeholder {
+    width: 100%;
+    height: 100%;
+  }
+
+  .hero__product-info {
+    padding: 1.5rem;
+  }
+
+  .hero__product-title {
+    margin: 0 0 0.75rem;
+    font-size: 1.125rem;
+    font-weight: 600;
+  }
+
+  .hero__product-title a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .hero__product-title a:hover {
+    color: var(--color-accent, #00d4aa);
+  }
+
+  .hero__product-price {
+    margin-bottom: 1.25rem;
+  }
+
+  .hero__product-unit-price,
+  .hero__product-amount {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-accent, #00d4aa);
+  }
+
+  .hero__product-unit-separator {
+    color: var(--color-text-muted, #b0b0b0);
+    margin: 0 0.125rem;
+  }
+
+  .hero__add-to-cart {
+    width: 100%;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Hero",
+  "class": "section-hero",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Industrial Chemicals, Delivered Direct"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Premium chemicals for concrete and quarry industries. Buy direct from manufacturers and save up to 40% on bulk orders."
+    },
+    {
+      "type": "text",
+      "id": "primary_button_text",
+      "label": "Primary button text",
+      "default": "Browse Products"
+    },
+    {
+      "type": "url",
+      "id": "primary_button_link",
+      "label": "Primary button link",
+      "default": "#products"
+    },
+    {
+      "type": "text",
+      "id": "secondary_button_text",
+      "label": "Secondary button text",
+      "default": "How it Works"
+    },
+    {
+      "type": "url",
+      "id": "secondary_button_link",
+      "label": "Secondary button link",
+      "default": "#how-it-works"
+    },
+    {
+      "type": "product",
+      "id": "featured_product",
+      "label": "Featured product"
+    },
+    {
+      "type": "text",
+      "id": "featured_badge_text",
+      "label": "Featured badge text",
+      "default": "Most Popular"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hero",
+      "settings": {
+        "heading": "Industrial Chemicals, Delivered Direct",
+        "subheading": "Premium chemicals for concrete and quarry industries. Buy direct from manufacturers and save up to 40% on bulk orders.",
+        "primary_button_text": "Browse Products",
+        "secondary_button_text": "How it Works",
+        "featured_badge_text": "Most Popular"
+      }
+    }
+  ]
+}
+{% endschema %}

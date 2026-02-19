@@ -1,0 +1,162 @@
+<section class="cart-page">
+  <div class="container">
+
+    <h1 class="cart-page__heading">
+      {{ section.settings.heading }}
+      {%- if cart.item_count > 0 -%}
+        <span class="cart-page__count">({{ cart.item_count }})</span>
+      {%- endif -%}
+    </h1>
+
+    {%- if cart.item_count == 0 -%}
+      {%- comment -%} Empty cart state {%- endcomment -%}
+      <div class="cart-page__empty">
+        <p class="cart-page__empty-text">{{ section.settings.empty_text | default: 'Your cart is empty.' }}</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn btn--primary">
+          {{ section.settings.continue_text }}
+        </a>
+      </div>
+
+    {%- else -%}
+      {%- comment -%} Cart line items {%- endcomment -%}
+      <div class="cart-page__contents">
+        <div class="cart-page__items">
+          {%- for item in cart.items -%}
+            <div class="cart-page__line-item" data-line-item-key="{{ item.key }}">
+              <div class="cart-page__line-image">
+                {%- if item.image -%}
+                  <img
+                    src="{{ item.image | image_url: width: 160 }}"
+                    alt="{{ item.image.alt | default: item.product.title | escape }}"
+                    width="160"
+                    height="160"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </div>
+
+              <div class="cart-page__line-details">
+                <h3 class="cart-page__line-title">
+                  <a href="{{ item.url }}">{{ item.product.title | escape }}</a>
+                </h3>
+                {%- if item.variant.title != 'Default Title' -%}
+                  <p class="cart-page__line-variant">{{ item.variant.title }}</p>
+                {%- endif -%}
+                <div class="cart-page__line-pricing">
+                  <span class="cart-page__line-unit-price">{{ item.variant.price | money }}</span>
+                  {%- if item.variant.unit_price -%}
+                    <span class="cart-page__line-per-unit">
+                      {{ item.variant.unit_price | money }}/{{ item.variant.unit_price_measurement.reference_unit }}
+                    </span>
+                  {%- endif -%}
+                </div>
+              </div>
+
+              <div class="cart-page__line-quantity">
+                <label class="visually-hidden" for="cart-quantity-{{ forloop.index }}">{{ 'cart.label.quantity' | t }}</label>
+                <div class="quantity-input">
+                  <button
+                    type="button"
+                    class="quantity-input__btn quantity-input__btn--minus"
+                    aria-label="{{ 'products.product.decrease_quantity' | t }}"
+                    data-action="decrease"
+                    data-line-index="{{ forloop.index }}"
+                  >
+                    {%- render 'icon-minus' -%}
+                  </button>
+                  <input
+                    type="number"
+                    id="cart-quantity-{{ forloop.index }}"
+                    class="quantity-input__field"
+                    name="updates[]"
+                    value="{{ item.quantity }}"
+                    min="0"
+                    data-line-index="{{ forloop.index }}"
+                    aria-label="{{ 'cart.label.quantity' | t }}"
+                  >
+                  <button
+                    type="button"
+                    class="quantity-input__btn quantity-input__btn--plus"
+                    aria-label="{{ 'products.product.increase_quantity' | t }}"
+                    data-action="increase"
+                    data-line-index="{{ forloop.index }}"
+                  >
+                    {%- render 'icon-plus' -%}
+                  </button>
+                </div>
+              </div>
+
+              <div class="cart-page__line-total">
+                <span>{{ item.final_line_price | money }}</span>
+              </div>
+
+              <div class="cart-page__line-remove">
+                <button
+                  type="button"
+                  class="cart-page__remove-btn"
+                  data-action="remove"
+                  data-line-index="{{ forloop.index }}"
+                  aria-label="{{ 'cart.general.remove' | t }} {{ item.product.title | escape }}"
+                >
+                  {%- render 'icon-close' -%}
+                </button>
+              </div>
+            </div>
+          {%- endfor -%}
+        </div>
+
+        {%- comment -%} Cart sidebar {%- endcomment -%}
+        <div class="cart-page__sidebar">
+          {%- comment -%} Loyalty progress bar {%- endcomment -%}
+          {% render 'loyalty-progress-bar' %}
+
+          <div class="cart-page__totals">
+            <div class="cart-page__subtotal">
+              <span class="cart-page__subtotal-label">{{ 'cart.general.subtotal' | t }}</span>
+              <span class="cart-page__subtotal-value">{{ cart.total_price | money }}</span>
+            </div>
+            <p class="cart-page__tax-note">{{ 'cart.general.taxes_shipping_note' | t }}</p>
+          </div>
+
+          <div class="cart-page__actions">
+            <a href="/checkout" class="btn btn--primary btn--full">
+              {{ 'cart.general.checkout' | t }}
+            </a>
+            <a href="{{ routes.all_products_collection_url }}" class="btn btn--ghost btn--full">
+              {{ section.settings.continue_text }}
+            </a>
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Cart page",
+  "tag": "section",
+  "class": "section-main-cart",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.main_cart.settings.heading.label",
+      "default": "Your Cart"
+    },
+    {
+      "type": "text",
+      "id": "empty_text",
+      "label": "t:sections.main_cart.settings.empty_text.label",
+      "default": "Your cart is currently empty."
+    },
+    {
+      "type": "text",
+      "id": "continue_text",
+      "label": "t:sections.main_cart.settings.continue_text.label",
+      "default": "Continue Shopping"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,28 @@
+{%- comment -%}
+  Similar product comparison row
+  Accepts:
+    - name: competitor product name (string)
+    - price: competitor price per unit (string)
+    - unit: price unit label (string)
+    - our_price: our per-litre price (number)
+{%- endcomment -%}
+
+{%- assign competitor_price = price | times: 1.0 -%}
+{%- assign our = our_price | times: 1.0 -%}
+
+{%- if competitor_price > 0 and our > 0 -%}
+  {%- assign savings = competitor_price | minus: our | divided_by: competitor_price | times: 100.0 -%}
+{%- else -%}
+  {%- assign savings = 0 -%}
+{%- endif -%}
+
+<div class="similar-product-row">
+  <div class="similar-product-row__name">{{ name | escape }}</div>
+  <div class="similar-product-row__price">${{ price }}{{ unit }}</div>
+  {%- if savings > 0 -%}
+    <div class="similar-product-row__savings">
+      {%- render 'icon-check' -%}
+      <span>{{ 'products.research.you_save' | t }} {{ savings | round }}%</span>
+    </div>
+  {%- endif -%}
+</div>

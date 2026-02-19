@@ -1,0 +1,246 @@
+{%- liquid
+  assign show_section = section.settings.show_section
+  assign demo_percent = section.settings.demo_progress_percent
+-%}
+
+{%- if show_section -%}
+  <section class="loyalty-banner" data-section-id="{{ section.id }}" data-section-type="loyalty-banner">
+    <div class="loyalty-banner__container container">
+      {%- if customer and customer.metafields.loyalty.enrolled -%}
+        {%- comment -%} Enrolled Customer State: Real Progress {%- endcomment -%}
+        <div class="loyalty-banner__enrolled">
+          <div class="loyalty-banner__header">
+            {%- if section.settings.heading != blank -%}
+              <h2 class="loyalty-banner__heading">{{ section.settings.heading }}</h2>
+            {%- endif -%}
+          </div>
+
+          <div class="loyalty-banner__progress-wrapper">
+            {% render 'loyalty-progress-bar' %}
+          </div>
+        </div>
+      {%- else -%}
+        {%- comment -%} Visitor / Non-Enrolled State: Promotional {%- endcomment -%}
+        <div class="loyalty-banner__promo">
+          <div class="loyalty-banner__promo-content">
+            {%- if section.settings.heading != blank -%}
+              <h2 class="loyalty-banner__heading">{{ section.settings.heading }}</h2>
+            {%- endif -%}
+
+            {%- if section.settings.description != blank -%}
+              <p class="loyalty-banner__description">{{ section.settings.description }}</p>
+            {%- endif -%}
+
+            {%- comment -%} Demo Progress Bar {%- endcomment -%}
+            <div class="loyalty-banner__demo-bar">
+              <div class="loyalty-banner__demo-bar-track">
+                <div class="loyalty-banner__demo-bar-fill" style="width: {{ demo_percent }}%;" aria-valuenow="{{ demo_percent }}" aria-valuemin="0" aria-valuemax="100" role="progressbar">
+                  <span class="loyalty-banner__demo-bar-label">{{ demo_percent }}%</span>
+                </div>
+              </div>
+              <div class="loyalty-banner__demo-bar-info">
+                <span class="loyalty-banner__demo-bar-text">{{ 'sections.loyalty_banner.demo_progress' | t | default: 'Progress to next reward tier' }}</span>
+              </div>
+            </div>
+
+            <div class="loyalty-banner__actions">
+              {%- if section.settings.cta_text != blank -%}
+                <a href="{{ section.settings.cta_link }}" class="button button--primary loyalty-banner__cta">
+                  {{ section.settings.cta_text }}
+                </a>
+              {%- endif -%}
+            </div>
+
+            {%- if section.settings.fine_print != blank -%}
+              <p class="loyalty-banner__fine-print">{{ section.settings.fine_print }}</p>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+
+<style>
+  .loyalty-banner {
+    background: linear-gradient(135deg, var(--color-bg-card, #141414) 0%, var(--color-bg-dark, #0a0a0a) 100%);
+    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border-left: 4px solid var(--color-accent, #00d4aa);
+    border-radius: 12px;
+    padding: 2.5rem 0;
+    margin: 2rem auto;
+    max-width: var(--page-width, 1200px);
+  }
+
+  .loyalty-banner__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .loyalty-banner__heading {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.75rem;
+  }
+
+  .loyalty-banner__description {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #b0b0b0);
+    margin: 0 0 1.5rem;
+    max-width: 600px;
+  }
+
+  /* Demo Progress Bar */
+  .loyalty-banner__demo-bar {
+    margin-bottom: 1.5rem;
+    max-width: 500px;
+  }
+
+  .loyalty-banner__demo-bar-track {
+    width: 100%;
+    height: 12px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .loyalty-banner__demo-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-accent, #00d4aa), #00f5c8);
+    border-radius: 6px;
+    transition: width 1s ease;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    min-width: 2rem;
+  }
+
+  .loyalty-banner__demo-bar-label {
+    font-size: 0.625rem;
+    font-weight: 700;
+    color: var(--color-bg-dark, #0a0a0a);
+    padding-right: 0.5rem;
+  }
+
+  .loyalty-banner__demo-bar-info {
+    margin-top: 0.5rem;
+  }
+
+  .loyalty-banner__demo-bar-text {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted, #b0b0b0);
+  }
+
+  .loyalty-banner__actions {
+    margin-bottom: 1rem;
+  }
+
+  .loyalty-banner__cta {
+    display: inline-flex;
+  }
+
+  .loyalty-banner__fine-print {
+    font-size: 0.75rem;
+    color: var(--color-text-muted, #b0b0b0);
+    opacity: 0.7;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  /* Enrolled State */
+  .loyalty-banner__enrolled {
+    text-align: center;
+  }
+
+  .loyalty-banner__progress-wrapper {
+    margin-top: 1.5rem;
+  }
+
+  /* Promo State */
+  .loyalty-banner__promo-content {
+    text-align: center;
+  }
+
+  @media (min-width: 768px) {
+    .loyalty-banner__promo-content {
+      text-align: left;
+    }
+
+    .loyalty-banner__enrolled {
+      text-align: left;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Loyalty Banner",
+  "class": "section-loyalty-banner",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "IBC Loyalty Rewards"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "Description",
+      "default": "Order regularly and unlock exclusive discounts. Every IBC purchase gets you closer to your next reward tier."
+    },
+    {
+      "type": "text",
+      "id": "cta_text",
+      "label": "CTA button text",
+      "default": "Join Loyalty Program"
+    },
+    {
+      "type": "url",
+      "id": "cta_link",
+      "label": "CTA button link",
+      "default": "/account/register"
+    },
+    {
+      "type": "text",
+      "id": "fine_print",
+      "label": "Fine print",
+      "default": "Free to join. No minimum order required. Rewards apply to all IBC product purchases."
+    },
+    {
+      "type": "range",
+      "id": "demo_progress_percent",
+      "label": "Demo progress percentage",
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "default": 75,
+      "unit": "%"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_section",
+      "label": "Show section",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Loyalty Banner",
+      "settings": {
+        "heading": "IBC Loyalty Rewards",
+        "description": "Order regularly and unlock exclusive discounts. Every IBC purchase gets you closer to your next reward tier.",
+        "cta_text": "Join Loyalty Program",
+        "fine_print": "Free to join. No minimum order required. Rewards apply to all IBC product purchases.",
+        "demo_progress_percent": 75,
+        "show_section": true
+      }
+    }
+  ]
+}
+{% endschema %}

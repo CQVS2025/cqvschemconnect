@@ -1,0 +1,133 @@
+<section class="order-page">
+  <div class="container">
+
+    {%- comment -%} Order header {%- endcomment -%}
+    <div class="order-page__header">
+      <h1 class="order-page__heading">{{ 'customer.order.title' | t }} {{ order.name }}</h1>
+      <p class="order-page__date">
+        {{ 'customer.order.date_html' | t: date: order.created_at | date: "%B %d, %Y" }}
+      </p>
+      <div class="order-page__statuses">
+        <span class="order-page__status order-page__status--financial">
+          {{ order.financial_status_label }}
+        </span>
+        <span class="order-page__status order-page__status--fulfillment">
+          {{ order.fulfillment_status_label | default: 'Unfulfilled' }}
+        </span>
+      </div>
+    </div>
+
+    {%- comment -%} Line items {%- endcomment -%}
+    <div class="order-page__items">
+      <table class="order-page__table">
+        <thead>
+          <tr>
+            <th class="order-page__th-product" colspan="2">{{ 'customer.order.product' | t }}</th>
+            <th class="order-page__th-quantity">{{ 'customer.order.quantity' | t }}</th>
+            <th class="order-page__th-price">{{ 'customer.order.price' | t }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for line_item in order.line_items -%}
+            <tr class="order-page__line-item">
+              <td class="order-page__line-image">
+                {%- if line_item.image -%}
+                  <img
+                    src="{{ line_item.image | image_url: width: 100 }}"
+                    alt="{{ line_item.image.alt | default: line_item.title | escape }}"
+                    width="100"
+                    height="100"
+                    loading="lazy"
+                  >
+                {%- endif -%}
+              </td>
+              <td class="order-page__line-details">
+                <span class="order-page__line-title">{{ line_item.title | escape }}</span>
+                {%- if line_item.variant.title != 'Default Title' -%}
+                  <span class="order-page__line-variant">{{ line_item.variant.title }}</span>
+                {%- endif -%}
+                {%- if line_item.sku != blank -%}
+                  <span class="order-page__line-sku">{{ 'customer.order.sku' | t }}: {{ line_item.sku }}</span>
+                {%- endif -%}
+              </td>
+              <td class="order-page__line-quantity">{{ line_item.quantity }}</td>
+              <td class="order-page__line-price">{{ line_item.final_line_price | money }}</td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+    </div>
+
+    {%- comment -%} Order totals {%- endcomment -%}
+    <div class="order-page__totals">
+      <div class="order-page__totals-row">
+        <span>{{ 'customer.order.subtotal' | t }}</span>
+        <span>{{ order.line_items_subtotal_price | money }}</span>
+      </div>
+
+      {%- for shipping_method in order.shipping_methods -%}
+        <div class="order-page__totals-row">
+          <span>{{ 'customer.order.shipping' | t }} ({{ shipping_method.title }})</span>
+          <span>{{ shipping_method.price | money }}</span>
+        </div>
+      {%- endfor -%}
+
+      {%- for discount_application in order.discount_applications -%}
+        <div class="order-page__totals-row order-page__totals-row--discount">
+          <span>{{ 'customer.order.discount' | t }} ({{ discount_application.title }})</span>
+          <span>-{{ discount_application.total_allocated_amount | money }}</span>
+        </div>
+      {%- endfor -%}
+
+      {%- for tax_line in order.tax_lines -%}
+        <div class="order-page__totals-row">
+          <span>{{ 'customer.order.tax' | t }} ({{ tax_line.title }} {{ tax_line.rate_percentage }}%)</span>
+          <span>{{ tax_line.price | money }}</span>
+        </div>
+      {%- endfor -%}
+
+      <div class="order-page__totals-row order-page__totals-row--total">
+        <span>{{ 'customer.order.total' | t }}</span>
+        <span>{{ order.total_price | money }}</span>
+      </div>
+    </div>
+
+    {%- comment -%} Addresses {%- endcomment -%}
+    <div class="order-page__addresses">
+      {%- if order.shipping_address -%}
+        <div class="order-page__address">
+          <h2 class="order-page__address-title">{{ 'customer.order.shipping_address' | t }}</h2>
+          <address class="order-page__address-content">
+            {{ order.shipping_address | format_address }}
+          </address>
+        </div>
+      {%- endif -%}
+
+      {%- if order.billing_address -%}
+        <div class="order-page__address">
+          <h2 class="order-page__address-title">{{ 'customer.order.billing_address' | t }}</h2>
+          <address class="order-page__address-content">
+            {{ order.billing_address | format_address }}
+          </address>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Back to account {%- endcomment -%}
+    <div class="order-page__back">
+      <a href="{{ routes.account_url }}" class="btn btn--ghost">
+        {{ 'customer.order.back_to_account' | t }}
+      </a>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Order page",
+  "tag": "section",
+  "class": "section-main-order",
+  "settings": []
+}
+{% endschema %}

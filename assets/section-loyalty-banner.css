@@ -1,0 +1,191 @@
+/* ==========================================================================
+   Section: Loyalty Banner
+   Loyalty program progress bar and tier info
+   Design tokens: accent #00d9a3, card bg #1e2d3d, section bg #1a2332,
+                  text primary #ffffff, text secondary #94a3b8,
+                  border #2a3f5f, radius-lg 12px, radius-md 8px
+   ========================================================================== */
+
+/* ---------- Base ---------- */
+.loyalty-banner {
+  background-color: #1a2332;
+  padding: 3rem 0;
+}
+
+.loyalty-banner__inner {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+/* ---------- Text ---------- */
+.loyalty-banner__heading {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+}
+
+.loyalty-banner__description {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin: 0 0 1.5rem;
+  line-height: 1.6;
+}
+
+/* ---------- Demo progress bar ---------- */
+.loyalty-banner__demo-bar {
+  position: relative;
+  background-color: #1e2d3d;
+  border: 1px solid #2a3f5f;
+  border-radius: 12px;
+  padding: 1.5rem;
+  text-align: left;
+}
+
+.loyalty-banner__demo-bar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.loyalty-banner__demo-bar-tier {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #00d9a3;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.loyalty-banner__demo-bar-points {
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.loyalty-banner__demo-bar-points strong {
+  color: #ffffff;
+  font-weight: 700;
+}
+
+/* Track */
+.loyalty-banner__demo-bar-track {
+  position: relative;
+  width: 100%;
+  height: 10px;
+  background-color: rgba(42, 63, 95, 0.5);
+  border-radius: 9999px;
+  overflow: hidden;
+  margin-bottom: 0.75rem;
+}
+
+/* Fill */
+.loyalty-banner__demo-bar-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #00d9a3, #00b88a);
+  border-radius: 9999px;
+  transition: width 0.6s ease;
+}
+
+/* Tier markers */
+.loyalty-banner__demo-bar-tiers {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.loyalty-banner__demo-bar-tier-mark {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  flex: 0 0 auto;
+}
+
+.loyalty-banner__demo-bar-tier-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 9999px;
+  background-color: #2a3f5f;
+  border: 2px solid #2a3f5f;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.loyalty-banner__demo-bar-tier-dot.is-reached {
+  background-color: #00d9a3;
+  border-color: #00d9a3;
+}
+
+.loyalty-banner__demo-bar-tier-label {
+  font-size: 0.6875rem;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 500;
+}
+
+.loyalty-banner__demo-bar-tier-label.is-reached {
+  color: #00d9a3;
+}
+
+/* ---------- Reward badges ---------- */
+.loyalty-banner__rewards {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+
+.loyalty-banner__reward {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background-color: rgba(0, 217, 163, 0.08);
+  border: 1px solid rgba(0, 217, 163, 0.15);
+  color: #00d9a3;
+  font-size: 0.75rem;
+  font-weight: 500;
+  padding: 0.375rem 0.75rem;
+  border-radius: 9999px;
+}
+
+/* ---------- Fine print ---------- */
+.loyalty-banner__fine-print {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+/* ==========================================================================
+   Breakpoint: 640px (tablet)
+   ========================================================================== */
+@media screen and (min-width: 640px) {
+  .loyalty-banner__inner {
+    padding: 0 1.5rem;
+  }
+
+  .loyalty-banner__demo-bar {
+    padding: 2rem;
+  }
+}
+
+/* ==========================================================================
+   Breakpoint: 1024px (desktop)
+   ========================================================================== */
+@media screen and (min-width: 1024px) {
+  .loyalty-banner {
+    padding: 4rem 0;
+  }
+
+  .loyalty-banner__inner {
+    padding: 0 2rem;
+  }
+}

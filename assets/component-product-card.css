@@ -1,0 +1,132 @@
+/* ==========================================================================
+   Component: Product Card
+   Dark-themed Shopify B2B chemical marketplace
+   Mobile-first CSS
+   ========================================================================== */
+
+.product-card {
+  background-color: #1e2d3d;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #2a3f5f;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  border-color: rgba(0, 217, 163, 0.3);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.3), 0 2px 4px -2px rgba(0, 0, 0, 0.2);
+}
+
+/* ---------- Image ---------- */
+
+.product-card__image-link {
+  display: block;
+}
+
+.product-card__image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.product-card__image-placeholder {
+  aspect-ratio: 1;
+  background-color: #151e2b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+}
+
+/* ---------- Info ---------- */
+
+.product-card__info {
+  padding: 1.25rem;
+}
+
+/* ---------- Badges ---------- */
+
+.product-card__badges {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+  min-height: 24px;
+}
+
+/* ---------- Title ---------- */
+
+.product-card__title {
+  font-size: 1rem;
+  color: #ffffff;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.product-card__title a {
+  color: #ffffff;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.product-card__title a:hover {
+  color: #00d9a3;
+}
+
+/* ---------- Price Row ---------- */
+
+.product-card__price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.product-card__price {
+  font-size: 1.25rem;
+  color: #00d9a3;
+  font-weight: 700;
+}
+
+.product-card__variant-count {
+  font-size: 0.75rem;
+  color: #64748b;
+}
+
+/* ---------- Actions ---------- */
+
+.product-card__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.product-card__research-toggle {
+  flex: 1 1 auto;
+}
+
+.product-card__research-toggle-icon {
+  transition: transform 0.3s ease;
+}
+
+.product-card__research-toggle[aria-expanded="true"] .product-card__research-toggle-icon {
+  transform: rotate(180deg);
+}
+
+.product-card__add-to-cart {
+  flex: 1;
+}
+
+/* ---------- Research Panel (expand/collapse) ---------- */
+
+.product-card__research-panel {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.product-card__research-panel.is-open {
+  max-height: 2000px;
+}

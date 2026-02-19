@@ -1,0 +1,241 @@
+/* ==========================================================================
+   Section: Hero
+   Full-width hero with text + featured product card
+   Design tokens: accent #00d9a3, card bg #1e2d3d, section bg #1a2332,
+                  text primary #ffffff, text secondary #94a3b8,
+                  border #2a3f5f, radius-lg 12px, radius-md 8px
+   ========================================================================== */
+
+/* ---------- Base ---------- */
+.hero {
+  padding-top: 120px; /* account for fixed header */
+  padding-bottom: 4rem;
+}
+
+.hero__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  align-items: center;
+}
+
+/* ---------- Content column ---------- */
+.hero__content {
+  order: 2;
+}
+
+.hero__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background-color: rgba(0, 217, 163, 0.1);
+  color: #00d9a3;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  padding: 0.375rem 0.875rem;
+  border-radius: 9999px;
+  border: 1px solid rgba(0, 217, 163, 0.2);
+  margin-bottom: 1.5rem;
+}
+
+.hero__heading {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0;
+}
+
+.hero__heading-accent {
+  color: #00d9a3;
+}
+
+.hero__subheading {
+  font-size: 1.125rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  margin-top: 1.5rem;
+  max-width: 500px;
+}
+
+.hero__buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero__stats {
+  display: flex;
+  gap: 2rem;
+  margin-top: 2.5rem;
+  flex-wrap: wrap;
+}
+
+.hero__stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: block;
+}
+
+.hero__stat-label {
+  font-size: 0.8125rem;
+  color: #94a3b8;
+  margin-top: 0.125rem;
+}
+
+/* ---------- Product card column ---------- */
+.hero__card-wrapper {
+  order: 1;
+}
+
+.hero__card {
+  position: relative;
+  background-color: #1e2d3d;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #2a3f5f;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+}
+
+.hero__card-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background-color: #00d9a3;
+  color: #0f1923;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+  border-radius: 6px;
+  z-index: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.hero__card-image {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.hero__card-info {
+  padding: 1.5rem;
+}
+
+.hero__card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+}
+
+.hero__card-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.hero__card-price {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #00d9a3;
+}
+
+.hero__card-unit {
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.hero__card-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: #00d9a3;
+  color: #0f1923;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+  text-decoration: none;
+  gap: 0.5rem;
+}
+
+.hero__card-btn:hover {
+  background-color: #00c292;
+  transform: translateY(-1px);
+}
+
+.hero__card-btn:active {
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   Breakpoint: 640px (tablet)
+   ========================================================================== */
+@media screen and (min-width: 640px) {
+  .hero__inner {
+    padding: 0 1.5rem;
+    gap: 2.5rem;
+  }
+
+  .hero__heading {
+    font-size: 2.75rem;
+  }
+
+  .hero__content {
+    order: 1;
+  }
+
+  .hero__card-wrapper {
+    order: 2;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+}
+
+/* ==========================================================================
+   Breakpoint: 1024px (desktop)
+   ========================================================================== */
+@media screen and (min-width: 1024px) {
+  .hero {
+    padding-top: 140px;
+    padding-bottom: 5rem;
+  }
+
+  .hero__inner {
+    grid-template-columns: 1.5fr 1fr; /* 60/40 split */
+    gap: 3rem;
+    padding: 0 2rem;
+  }
+
+  .hero__content {
+    order: 1;
+  }
+
+  .hero__card-wrapper {
+    order: 2;
+    max-width: none;
+    margin: 0;
+  }
+
+  .hero__heading {
+    font-size: 3rem;
+  }
+}

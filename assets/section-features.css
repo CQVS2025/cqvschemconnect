@@ -1,0 +1,170 @@
+/* ==========================================================================
+   Section: Features
+   Feature cards grid with icon, title, description
+   Design tokens: accent #00d9a3, card bg #1e2d3d, section bg #1a2332,
+                  text primary #ffffff, text secondary #94a3b8,
+                  border #2a3f5f, radius-lg 12px, radius-md 8px
+   ========================================================================== */
+
+/* ---------- Base ---------- */
+.features {
+  background-color: #1a2332;
+  padding: 3rem 0;
+}
+
+.features__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* ---------- Header ---------- */
+.features__header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.features__heading {
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+}
+
+.features__subheading {
+  font-size: 1rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* ---------- Grid ---------- */
+.features__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* ---------- Card ---------- */
+.features__card {
+  background-color: #1e2d3d;
+  padding: 1.5rem;
+  border-radius: 12px;
+  border: 1px solid #2a3f5f;
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.features__card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  border-color: rgba(0, 217, 163, 0.3);
+}
+
+/* ---------- Icon ---------- */
+.features__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  margin: 0 auto 1rem;
+  color: #00d9a3;
+}
+
+.features__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.features__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* Icon background variant */
+.features__icon--bg {
+  width: 56px;
+  height: 56px;
+  background-color: rgba(0, 217, 163, 0.1);
+  border-radius: 12px;
+}
+
+.features__icon--bg svg,
+.features__icon--bg img {
+  width: 28px;
+  height: 28px;
+}
+
+/* ---------- Text ---------- */
+.features__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 0.5rem;
+}
+
+.features__description {
+  font-size: 0.875rem;
+  color: #94a3b8;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ---------- Card link variant ---------- */
+.features__card-link {
+  text-decoration: none;
+  display: block;
+}
+
+.features__card-link .features__card {
+  cursor: pointer;
+}
+
+/* ==========================================================================
+   Breakpoint: 640px (tablet)
+   ========================================================================== */
+@media screen and (min-width: 640px) {
+  .features__inner {
+    padding: 0 1.5rem;
+  }
+
+  .features__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .features__card {
+    padding: 2rem;
+  }
+}
+
+/* ==========================================================================
+   Breakpoint: 1024px (desktop)
+   ========================================================================== */
+@media screen and (min-width: 1024px) {
+  .features {
+    padding: 4rem 0;
+  }
+
+  .features__inner {
+    padding: 0 2rem;
+  }
+
+  .features__heading {
+    font-size: 2rem;
+  }
+
+  .features__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* ==========================================================================
+   Breakpoint: 1440px (wide desktop) - up to 5 columns
+   ========================================================================== */
+@media screen and (min-width: 1440px) {
+  .features__grid {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}

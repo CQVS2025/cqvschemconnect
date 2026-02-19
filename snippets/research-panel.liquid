@@ -1,0 +1,82 @@
+{%- comment -%}
+  Research panel component
+  Accepts:
+    - product: product object
+{%- endcomment -%}
+
+{%- assign first_variant = product.selected_or_first_available_variant -%}
+
+<div class="research-panel">
+
+  {%- comment -%} Similar Products {%- endcomment -%}
+  {%- if product.metafields.custom.similar_products != blank -%}
+    {%- assign similar_json = product.metafields.custom.similar_products.value -%}
+    {%- if similar_json -%}
+      <div class="research-panel__section">
+        <h4 class="research-panel__heading">{{ 'products.research.similar_products' | t }}</h4>
+        <div class="research-panel__similar-list">
+          {%- assign our_unit_price = first_variant.unit_price | times: 1 | divided_by: 100.0 -%}
+          {%- for item in similar_json -%}
+            {%- render 'similar-product-row',
+              name: item.name,
+              price: item.price,
+              unit: item.unit,
+              our_price: our_unit_price
+            -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  {%- endif -%}
+
+  {%- comment -%} Verified Formulation {%- endcomment -%}
+  {%- if product.metafields.custom.formulation_verified -%}
+    <div class="research-panel__section">
+      <h4 class="research-panel__heading research-panel__heading--verified">
+        {%- render 'icon-check' -%}
+        {{ 'products.research.verified_match' | t }}
+      </h4>
+      <dl class="research-panel__data">
+        {%- if product.metafields.custom.cas_number != blank -%}
+          <div class="research-panel__data-row">
+            <dt>{{ 'products.research.cas_number' | t }}</dt>
+            <dd>{{ product.metafields.custom.cas_number }}</dd>
+          </div>
+        {%- endif -%}
+        {%- if product.metafields.custom.active_ingredient != blank -%}
+          <div class="research-panel__data-row">
+            <dt>{{ 'products.research.active_ingredient' | t }}</dt>
+            <dd>{{ product.metafields.custom.active_ingredient }}</dd>
+          </div>
+        {%- endif -%}
+        {%- if product.metafields.custom.ingredient_percentage != blank -%}
+          <div class="research-panel__data-row">
+            <dt>{{ 'products.research.concentration' | t }}</dt>
+            <dd>{{ product.metafields.custom.ingredient_percentage }}</dd>
+          </div>
+        {%- endif -%}
+      </dl>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} SDS Link {%- endcomment -%}
+  {%- if product.metafields.custom.sds_url != blank -%}
+    <div class="research-panel__section">
+      <a href="{{ product.metafields.custom.sds_url }}" target="_blank" rel="noopener noreferrer" class="research-panel__sds-link">
+        {%- render 'icon-external' -%}
+        {{ 'products.research.view_sds' | t }}
+      </a>
+    </div>
+  {%- endif -%}
+
+  {%- comment -%} Research Notes {%- endcomment -%}
+  {%- if product.metafields.custom.research_notes != blank -%}
+    <div class="research-panel__section">
+      <h4 class="research-panel__heading">{{ 'products.research.notes' | t }}</h4>
+      <div class="research-panel__notes">
+        {{ product.metafields.custom.research_notes }}
+      </div>
+    </div>
+  {%- endif -%}
+
+</div>

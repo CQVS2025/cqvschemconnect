@@ -1,0 +1,29 @@
+{%- comment -%}
+  Variant picker component
+  Accepts:
+    - product: product object
+{%- endcomment -%}
+
+{%- if product.has_only_default_variant == false -%}
+  <fieldset class="variant-picker" data-product-id="{{ product.id }}">
+    <legend class="variant-picker__label">{{ product.options_with_values.first.name | default: 'Size' }}</legend>
+    <div class="variant-picker__options">
+      {%- for variant in product.variants -%}
+        {%- if variant.available -%}
+          <button
+            type="button"
+            class="variant-picker__btn{% if forloop.first %} is-selected{% endif %}"
+            data-variant-id="{{ variant.id }}"
+            data-variant-price="{{ variant.price }}"
+            data-variant-unit-price="{{ variant.unit_price | default: '' }}"
+            data-variant-unit-label="{{ variant.unit_price_measurement.reference_unit | default: '' }}"
+            data-variant-image="{{ variant.image | default: product.featured_image | image_url: width: 800 }}"
+            aria-pressed="{% if forloop.first %}true{% else %}false{% endif %}"
+          >
+            {{ variant.title }}
+          </button>
+        {%- endif -%}
+      {%- endfor -%}
+    </div>
+  </fieldset>
+{%- endif -%}

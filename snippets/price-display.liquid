@@ -1,0 +1,14 @@
+{%- comment -%}
+  Price display component
+  Accepts:
+    - variant: variant object
+{%- endcomment -%}
+
+<div class="price-display">
+  <span class="price-display__total">{{ variant.price | money }}</span>
+  {%- if variant.unit_price -%}
+    <span class="price-display__unit">
+      {{ variant.unit_price | money }}/{{ variant.unit_price_measurement.reference_unit }}
+    </span>
+  {%- endif -%}
+</div>

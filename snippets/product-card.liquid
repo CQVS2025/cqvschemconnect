@@ -1,0 +1,112 @@
+{%- comment -%}
+  Product card component
+  Accepts:
+    - product: product object
+    - show_research: boolean (default true)
+{%- endcomment -%}
+
+{%- assign first_variant = product.selected_or_first_available_variant -%}
+{%- assign show_research_panel = show_research | default: true -%}
+
+{%- assign has_research = false -%}
+{%- if product.metafields.custom.similar_products != blank
+  or product.metafields.custom.formulation_verified
+  or product.metafields.custom.sds_url != blank
+  or product.metafields.custom.research_notes != blank -%}
+  {%- assign has_research = true -%}
+{%- endif -%}
+
+<article class="product-card" data-product-id="{{ product.id }}">
+  <a href="{{ product.url }}" class="product-card__image-link">
+    {%- if product.featured_image -%}
+      <img
+        src="{{ product.featured_image | image_url: width: 400 }}"
+        alt="{{ product.featured_image.alt | default: product.title | escape }}"
+        width="400"
+        height="400"
+        loading="lazy"
+        class="product-card__image"
+      >
+    {%- else -%}
+      <div class="product-card__image-placeholder">
+        {{ 'products.card.no_image' | t }}
+      </div>
+    {%- endif -%}
+  </a>
+
+  <div class="product-card__info">
+    {%- comment -%} Badges {%- endcomment -%}
+    <div class="product-card__badges">
+      {%- if product.metafields.custom.dg_class != blank -%}
+        {%- render 'badge', type: 'danger', text: product.metafields.custom.dg_class | prepend: 'DG Class ' -%}
+      {%- endif -%}
+      {%- if product.metafields.custom.formulation_verified -%}
+        {%- render 'badge', type: 'success', text: 'Verified' -%}
+      {%- endif -%}
+      {%- if product.metafields.custom.coming_soon -%}
+        {%- render 'badge', type: 'warning', text: 'Coming Soon' -%}
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Title {%- endcomment -%}
+    <h3 class="product-card__title">
+      <a href="{{ product.url }}">{{ product.title | escape }}</a>
+    </h3>
+
+    {%- comment -%} Price {%- endcomment -%}
+    <div class="product-card__price-row">
+      <span class="product-card__price">
+        {%- if first_variant.unit_price -%}
+          {{ first_variant.unit_price | money }}/{{ first_variant.unit_price_measurement.reference_unit }}
+        {%- else -%}
+          {{ first_variant.price | money }}
+        {%- endif -%}
+      </span>
+      {%- if product.variants.size > 1 -%}
+        <span class="product-card__variant-count">
+          {{ product.variants.size }} {{ 'products.card.sizes' | t }}
+        </span>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Actions {%- endcomment -%}
+    <div class="product-card__actions">
+      {%- if show_research_panel and has_research -%}
+        <button
+          type="button"
+          class="product-card__research-toggle btn btn--ghost"
+          aria-expanded="false"
+          aria-controls="research-{{ product.id }}"
+        >
+          <span class="product-card__research-toggle-text">{{ 'products.card.view_research' | t }}</span>
+          <span class="product-card__research-toggle-icon">{%- render 'icon-chevron' -%}</span>
+        </button>
+      {%- endif -%}
+
+      {%- if product.metafields.custom.coming_soon -%}
+        <button type="button" class="btn btn--primary product-card__add-to-cart" disabled>
+          {{ 'products.card.coming_soon' | t }}
+        </button>
+      {%- else -%}
+        <button
+          type="button"
+          class="btn btn--primary product-card__add-to-cart"
+          data-variant-id="{{ first_variant.id }}"
+          {% unless first_variant.available %}disabled{% endunless %}
+        >
+          {%- if first_variant.available -%}
+            {{ 'products.card.add_to_cart' | t }}
+          {%- else -%}
+            {{ 'products.card.sold_out' | t }}
+          {%- endif -%}
+        </button>
+      {%- endif -%}
+    </div>
+  </div>
+
+  {%- if show_research_panel and has_research -%}
+    <div id="research-{{ product.id }}" class="product-card__research-panel">
+      {%- render 'research-panel', product: product -%}
+    </div>
+  {%- endif -%}
+</article>

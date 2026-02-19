@@ -1,0 +1,239 @@
+/* ==========================================================================
+   Template: Account Page
+   Dark-themed Shopify B2B Chemical Marketplace
+   Mobile-first approach
+   ========================================================================== */
+
+/* Design Tokens (as CSS custom properties scoped to this template) */
+:root {
+  --accent: #00d9a3;
+  --card-bg: #1e2d3d;
+  --card-hover: #243447;
+  --section-bg: #1a2332;
+  --page-bg: #0f1923;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: #2a3f5f;
+  --border-light: rgba(42, 63, 95, 0.5);
+  --success: #22c55e;
+  --danger: #ef4444;
+  --input-bg: #162231;
+  --input-focus-bg: #1a2b3d;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Account Page Container
+   -------------------------------------------------------------------------- */
+
+.account-page {
+  padding: 3rem 1rem;
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Welcome
+   -------------------------------------------------------------------------- */
+
+.account-page__welcome {
+  margin-bottom: 2rem;
+}
+
+/* --------------------------------------------------------------------------
+   Sections
+   -------------------------------------------------------------------------- */
+
+.account-page__section {
+  margin-bottom: 3rem;
+}
+
+.account-page__section-heading {
+  font-size: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Loyalty Card
+   -------------------------------------------------------------------------- */
+
+.account-page__loyalty {
+  background-color: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  margin-bottom: 2rem;
+  border: 1px solid var(--border);
+}
+
+.account-page__stats {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.account-page__stat {
+  text-align: center;
+  padding: 1rem;
+  background-color: var(--section-bg);
+  border-radius: var(--radius-md);
+}
+
+.account-page__stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+}
+
+.account-page__stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+}
+
+/* --------------------------------------------------------------------------
+   Enroll Card
+   -------------------------------------------------------------------------- */
+
+.account-page__enroll {
+  background-color: var(--card-bg);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  text-align: center;
+  border: 1px solid var(--border);
+}
+
+/* --------------------------------------------------------------------------
+   Orders Table
+   -------------------------------------------------------------------------- */
+
+.account-page__orders-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.account-page__orders-table thead {
+  display: none;
+}
+
+.account-page__orders-table th {
+  color: var(--text-muted);
+  text-align: left;
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+}
+
+.account-page__orders-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-primary);
+}
+
+.account-page__orders-table a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.account-page__orders-table a:hover {
+  opacity: 0.85;
+  text-decoration: underline;
+}
+
+/* Mobile: Stacked cards layout for orders */
+.account-page__orders-table tbody tr {
+  display: block;
+  background-color: var(--card-bg);
+  border-radius: var(--radius-md);
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  border: 1px solid var(--border);
+}
+
+.account-page__orders-table tbody td {
+  display: block;
+  padding: 0.35rem 0;
+  border-bottom: none;
+  text-align: left;
+}
+
+.account-page__orders-table tbody td::before {
+  content: attr(data-label);
+  display: block;
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.15rem;
+}
+
+/* --------------------------------------------------------------------------
+   Logout
+   -------------------------------------------------------------------------- */
+
+.account-page__logout {
+  margin-top: 2rem;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+/* Tablet (640px+) */
+@media (min-width: 640px) {
+  .account-page__stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .account-page {
+    padding: 6rem 2rem;
+  }
+
+  /* Restore standard table layout on desktop */
+  .account-page__orders-table thead {
+    display: table-header-group;
+  }
+
+  .account-page__orders-table tbody tr {
+    display: table-row;
+    background-color: transparent;
+    border-radius: 0;
+    padding: 0;
+    margin-bottom: 0;
+    border: none;
+  }
+
+  .account-page__orders-table tbody td {
+    display: table-cell;
+    padding: 0.75rem;
+    border-bottom: 1px solid var(--border-light);
+  }
+
+  .account-page__orders-table tbody td::before {
+    display: none;
+  }
+
+  .account-page__orders-table tbody tr:hover {
+    background-color: var(--card-hover);
+  }
+}

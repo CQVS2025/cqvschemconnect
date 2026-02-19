@@ -1,0 +1,86 @@
+<section class="auth-page">
+  <div class="container container--narrow">
+
+    <div class="auth-page__card">
+      <h1 class="auth-page__heading">{{ section.settings.heading }}</h1>
+
+      {%- comment -%} Error display {%- endcomment -%}
+      {%- if form.errors -%}
+        <div class="auth-page__errors" role="alert">
+          <h2 class="auth-page__errors-heading">{{ 'customer.login.errors_heading' | t }}</h2>
+          <ul class="auth-page__errors-list">
+            {%- for field in form.errors -%}
+              <li>
+                {%- if field == 'form' -%}
+                  {{ form.errors.messages[field] }}
+                {%- else -%}
+                  {{ form.errors.translated_fields[field] }} {{ form.errors.messages[field] }}
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Login form {%- endcomment -%}
+      {% form 'customer_login' %}
+        <div class="auth-page__field">
+          <label for="customer-email" class="auth-page__label">{{ 'customer.login.email' | t }}</label>
+          <input
+            type="email"
+            id="customer-email"
+            name="customer[email]"
+            class="auth-page__input"
+            autocomplete="email"
+            autocapitalize="off"
+            autocorrect="off"
+            required
+          >
+        </div>
+
+        <div class="auth-page__field">
+          <label for="customer-password" class="auth-page__label">{{ 'customer.login.password' | t }}</label>
+          <input
+            type="password"
+            id="customer-password"
+            name="customer[password]"
+            class="auth-page__input"
+            autocomplete="current-password"
+            required
+          >
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--full auth-page__submit">
+          {{ 'customer.login.sign_in' | t }}
+        </button>
+      {% endform %}
+
+      {%- comment -%} Links {%- endcomment -%}
+      <div class="auth-page__links">
+        <a href="{{ routes.account_recover_url }}" class="auth-page__link">
+          {{ 'customer.login.forgot_password' | t }}
+        </a>
+        <a href="{{ routes.account_register_url }}" class="auth-page__link">
+          {{ 'customer.login.create_account' | t }}
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Login page",
+  "tag": "section",
+  "class": "section-main-login",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.main_login.settings.heading.label",
+      "default": "Sign In"
+    }
+  ]
+}
+{% endschema %}

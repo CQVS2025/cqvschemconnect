@@ -1,0 +1,38 @@
+{%- comment -%}
+  Loyalty progress bar component
+  Reads from customer metafields — no parameters needed
+{%- endcomment -%}
+
+{%- if customer and customer.metafields.loyalty.enrolled -%}
+  {%- assign current = customer.metafields.loyalty.total_ibc_litres | default: 0 -%}
+  {%- assign target = 10000 -%}
+  {%- assign pct = current | times: 100.0 | divided_by: target -%}
+  {%- if pct > 100 -%}{%- assign pct = 100 -%}{%- endif -%}
+  {%- assign remaining = target | minus: current -%}
+
+  <div class="loyalty-bar" data-current="{{ current }}" data-target="{{ target }}">
+    <div class="loyalty-bar__header">
+      {%- render 'icon-star' -%}
+      <span class="loyalty-bar__title">{{ 'loyalty.program_name' | t }}</span>
+    </div>
+    <div class="loyalty-bar__track">
+      <div class="loyalty-bar__fill" style="width: {{ pct }}%"></div>
+    </div>
+    <div class="loyalty-bar__info">
+      <span>{{ current | append: 'L' }} / {{ target | append: 'L' }}</span>
+      {%- if customer.metafields.loyalty.active_discount_code -%}
+        <span class="loyalty-bar__reward-ready">
+          {{ 'loyalty.reward_ready' | t }}
+          <code class="loyalty-bar__code" data-code="{{ customer.metafields.loyalty.active_discount_code }}">
+            {{ customer.metafields.loyalty.active_discount_code }}
+          </code>
+          <button type="button" class="loyalty-bar__copy" aria-label="{{ 'loyalty.copy_code' | t }}">
+            {%- render 'icon-copy' -%}
+          </button>
+        </span>
+      {%- else -%}
+        <span>{{ remaining | append: 'L ' }}{{ 'loyalty.until_reward' | t }}</span>
+      {%- endif -%}
+    </div>
+  </div>
+{%- endif -%}

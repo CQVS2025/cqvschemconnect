@@ -1,0 +1,20 @@
+{
+  "current": {
+    "sections": {},
+    "content_for_index": [],
+    "store_name": "Chem Connect",
+    "tagline": "Australia's chemical marketplace for concrete & quarry",
+    "color_bg_page": "#0f1923",
+    "color_bg_section": "#1a2332",
+    "color_bg_card": "#1e2d3d",
+    "color_accent": "#00d9a3",
+    "color_accent_hover": "#00c494",
+    "color_text_primary": "#ffffff",
+    "color_text_secondary": "#94a3b8",
+    "color_border": "#2a3f5f",
+    "loyalty_enabled": true,
+    "loyalty_target_litres": 10000,
+    "loyalty_reward_litres": 1000,
+    "loyalty_program_name": "IBC Loyalty Rewards"
+  }
+}

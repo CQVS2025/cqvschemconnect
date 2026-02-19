@@ -1,0 +1,237 @@
+<section class="value-props" data-section-id="{{ section.id }}" data-section-type="value-props">
+  <div class="value-props__container container">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="value-props__heading">{{ section.settings.heading }}</h2>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="value-props__grid">
+        {%- for block in section.blocks -%}
+          <div class="value-props__card" {{ block.shopify_attributes }}>
+            <div class="value-props__icon">
+              {%- case block.settings.icon -%}
+                {%- when 'truck' -%}
+                  {% render 'icon-truck' %}
+                {%- when 'factory' -%}
+                  {% render 'icon-factory' %}
+                {%- when 'shield' -%}
+                  {% render 'icon-shield' %}
+                {%- when 'clock' -%}
+                  {% render 'icon-clock' %}
+                {%- when 'lock' -%}
+                  {% render 'icon-lock' %}
+                {%- when 'cart' -%}
+                  {% render 'icon-cart' %}
+                {%- when 'search' -%}
+                  {% render 'icon-search' %}
+                {%- when 'star' -%}
+                  {% render 'icon-star' %}
+                {%- when 'gift' -%}
+                  {% render 'icon-gift' %}
+                {%- when 'check' -%}
+                  {% render 'icon-check' %}
+                {%- when 'warning' -%}
+                  {% render 'icon-warning' %}
+              {%- endcase -%}
+            </div>
+
+            {%- if block.settings.title != blank -%}
+              <h3 class="value-props__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.description != blank -%}
+              <p class="value-props__description">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .value-props {
+    background-color: var(--color-bg-dark, #0a0a0a);
+    padding: 4rem 0;
+  }
+
+  .value-props__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .value-props__heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    text-align: center;
+    margin: 0 0 3rem;
+  }
+
+  @media (min-width: 768px) {
+    .value-props__heading {
+      font-size: 2.5rem;
+    }
+  }
+
+  .value-props__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .value-props__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .value-props__grid {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  .value-props__card {
+    background-color: var(--color-bg-card, #141414);
+    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    padding: 2rem;
+    text-align: center;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .value-props__card:hover {
+    border-color: var(--color-accent, #00d4aa);
+    transform: translateY(-4px);
+  }
+
+  .value-props__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    margin: 0 auto 1.25rem;
+    background-color: rgba(0, 212, 170, 0.1);
+    border-radius: 12px;
+    color: var(--color-accent, #00d4aa);
+  }
+
+  .value-props__icon svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .value-props__title {
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 0.75rem;
+  }
+
+  .value-props__description {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #b0b0b0);
+    margin: 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Value Propositions",
+  "class": "section-value-props",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Why Choose CQVS Chem Connect?"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "value_prop",
+      "name": "Value proposition",
+      "limit": 8,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Truck (Delivery)" },
+            { "value": "factory", "label": "Factory (Manufacturing)" },
+            { "value": "shield", "label": "Shield (Protection)" },
+            { "value": "clock", "label": "Clock (Time)" },
+            { "value": "lock", "label": "Lock (Security)" },
+            { "value": "cart", "label": "Cart (Shopping)" },
+            { "value": "search", "label": "Search" },
+            { "value": "star", "label": "Star (Quality)" },
+            { "value": "gift", "label": "Gift (Rewards)" },
+            { "value": "check", "label": "Check (Verified)" },
+            { "value": "warning", "label": "Warning (Safety)" }
+          ],
+          "default": "truck"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 8,
+  "presets": [
+    {
+      "name": "Value Propositions",
+      "settings": {
+        "heading": "Why Choose CQVS Chem Connect?"
+      },
+      "blocks": [
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "truck",
+            "title": "Direct Delivery",
+            "description": "Factory-direct shipping across Australia. Bulk IBC and drum orders delivered to your site."
+          }
+        },
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "factory",
+            "title": "Manufacturer Direct",
+            "description": "Cut out the middleman. Buy direct from certified chemical manufacturers at wholesale prices."
+          }
+        },
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "shield",
+            "title": "Quality Assured",
+            "description": "Every product meets Australian standards with full SDS documentation and batch traceability."
+          }
+        },
+        {
+          "type": "value_prop",
+          "settings": {
+            "icon": "gift",
+            "title": "Loyalty Rewards",
+            "description": "Earn rewards on every order. Unlock volume discounts and exclusive pricing tiers."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

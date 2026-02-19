@@ -1,0 +1,175 @@
+{%- assign current_variant = product.selected_or_first_available_variant -%}
+{%- assign is_coming_soon = product.metafields.custom.coming_soon -%}
+
+<section class="product-page" data-product-id="{{ product.id }}">
+  <div class="container">
+
+    {%- comment -%} Two-column layout {%- endcomment -%}
+    <div class="product-page__columns">
+
+      {%- comment -%} Left column: Gallery {%- endcomment -%}
+      <div class="product-page__gallery">
+        <div class="product-page__main-image-wrap">
+          {%- if product.featured_image -%}
+            <img
+              id="product-main-image"
+              src="{{ product.featured_image | image_url: width: 800 }}"
+              alt="{{ product.featured_image.alt | default: product.title | escape }}"
+              width="800"
+              height="800"
+              class="product-page__main-image"
+            >
+          {%- else -%}
+            <div id="product-main-image" class="product-page__image-placeholder">
+              {{ 'products.product.no_image' | t }}
+            </div>
+          {%- endif -%}
+        </div>
+
+        {%- if product.images.size > 1 -%}
+          <div class="product-page__thumbnails">
+            {%- for image in product.images -%}
+              <button
+                type="button"
+                class="product-page__thumbnail{% if forloop.first %} is-active{% endif %}"
+                data-thumbnail-index="{{ forloop.index0 }}"
+                data-full-src="{{ image | image_url: width: 800 }}"
+                data-full-alt="{{ image.alt | default: product.title | escape }}"
+                aria-label="{{ 'products.product.view_image' | t }} {{ forloop.index }}"
+              >
+                <img
+                  src="{{ image | image_url: width: 120 }}"
+                  alt="{{ image.alt | default: product.title | escape }}"
+                  width="120"
+                  height="120"
+                  loading="lazy"
+                >
+              </button>
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Right column: Product info {%- endcomment -%}
+      <div class="product-page__info">
+        <h1 class="product-page__title">{{ product.title | escape }}</h1>
+
+        {%- comment -%} Badges row {%- endcomment -%}
+        <div class="product-page__badges">
+          {%- if product.metafields.custom.dg_class != blank -%}
+            {%- render 'badge', type: 'danger', text: product.metafields.custom.dg_class | prepend: 'DG Class ' -%}
+          {%- endif -%}
+          {%- if product.metafields.custom.formulation_verified -%}
+            {%- render 'badge', type: 'success', text: 'Verified' -%}
+          {%- endif -%}
+          {%- if is_coming_soon -%}
+            {%- render 'badge', type: 'warning', text: 'Coming Soon' -%}
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Variant picker {%- endcomment -%}
+        {% render 'variant-picker', product: product %}
+
+        {%- comment -%} Price display {%- endcomment -%}
+        <div class="product-page__price">
+          <span class="product-page__price-total" id="product-price-total">
+            {{ current_variant.price | money }}
+          </span>
+          {%- if current_variant.unit_price -%}
+            <span class="product-page__price-unit" id="product-price-unit">
+              {{ current_variant.unit_price | money }}/{{ current_variant.unit_price_measurement.reference_unit }}
+            </span>
+          {%- else -%}
+            <span class="product-page__price-unit" id="product-price-unit"></span>
+          {%- endif -%}
+        </div>
+
+        {%- comment -%} Add to cart form {%- endcomment -%}
+        {% form 'product', product %}
+          <input type="hidden" name="id" value="{{ current_variant.id }}" data-product-variant-id>
+          <div class="product-page__quantity">
+            <label class="product-page__quantity-label" for="product-quantity">{{ 'products.product.quantity' | t }}</label>
+            {% render 'quantity-input', value: 1, name: 'quantity', min: 1, id: 'product' %}
+          </div>
+          <div class="product-page__submit">
+            {%- if is_coming_soon -%}
+              <button type="submit" class="btn btn--primary btn--full" disabled>
+                {{ 'products.product.coming_soon' | t }}
+              </button>
+            {%- else -%}
+              <button
+                type="submit"
+                class="btn btn--primary btn--full"
+                {% unless current_variant.available %}disabled{% endunless %}
+              >
+                {%- if current_variant.available -%}
+                  {{ 'products.product.add_to_cart' | t }}
+                {%- else -%}
+                  {{ 'products.product.sold_out' | t }}
+                {%- endif -%}
+              </button>
+            {%- endif -%}
+          </div>
+        {% endform %}
+
+        {%- comment -%} Product description {%- endcomment -%}
+        {%- if product.description != blank -%}
+          <div class="product-page__description rte">
+            {{ product.description }}
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment -%} Below fold: Research panel (full width, expanded) {%- endcomment -%}
+    <div class="product-page__research">
+      {% render 'research-panel', product: product %}
+    </div>
+
+    {%- comment -%} Related products {%- endcomment -%}
+    {%- if section.settings.enable_related -%}
+      {%- assign related_count = 0 -%}
+      {%- assign has_related = false -%}
+      {%- for item in collection.products -%}
+        {%- if item.id != product.id -%}
+          {%- assign has_related = true -%}
+          {%- break -%}
+        {%- endif -%}
+      {%- endfor -%}
+
+      {%- if has_related -%}
+        <div class="product-page__related">
+          <h2 class="product-page__related-heading">{{ 'products.product.related_products' | t }}</h2>
+          <div class="product-grid product-grid--4">
+            {%- for item in collection.products -%}
+              {%- if item.id != product.id -%}
+                {%- assign related_count = related_count | plus: 1 -%}
+                {% render 'product-card', product: item %}
+                {%- if related_count >= 4 -%}
+                  {%- break -%}
+                {%- endif -%}
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Product page",
+  "tag": "section",
+  "class": "section-main-product",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_related",
+      "label": "t:sections.main_product.settings.enable_related.label",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

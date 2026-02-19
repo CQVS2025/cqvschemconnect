@@ -1,0 +1,154 @@
+/* ==========================================================================
+   Template: Auth Pages (Login / Register / Reset Password)
+   Dark-themed Shopify B2B Chemical Marketplace
+   Mobile-first approach
+   ========================================================================== */
+
+/* Design Tokens (as CSS custom properties scoped to this template) */
+:root {
+  --accent: #00d9a3;
+  --card-bg: #1e2d3d;
+  --card-hover: #243447;
+  --section-bg: #1a2332;
+  --page-bg: #0f1923;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: #2a3f5f;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --input-bg: #162231;
+  --input-focus-bg: #1a2b3d;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Auth Page Container
+   -------------------------------------------------------------------------- */
+
+.auth-page {
+  padding: 3rem 1rem;
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+  max-width: 480px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Heading
+   -------------------------------------------------------------------------- */
+
+.auth-page__heading {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Form
+   -------------------------------------------------------------------------- */
+
+.auth-page__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Field
+   -------------------------------------------------------------------------- */
+
+.auth-page__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.auth-page__label {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.auth-page__input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--input-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  outline: none;
+}
+
+.auth-page__input::placeholder {
+  color: var(--text-muted);
+}
+
+.auth-page__input:focus {
+  background-color: var(--input-focus-bg);
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Footer (Links below form)
+   -------------------------------------------------------------------------- */
+
+.auth-page__footer {
+  text-align: center;
+  margin-top: 1.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.auth-page__footer a {
+  color: var(--accent);
+  text-decoration: none;
+  transition: opacity 0.2s ease;
+}
+
+.auth-page__footer a:hover {
+  opacity: 0.85;
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Error Messages
+   -------------------------------------------------------------------------- */
+
+.auth-page__errors {
+  background-color: rgba(239, 68, 68, 0.15);
+  color: var(--danger);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  margin-bottom: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.auth-page__errors ul {
+  margin: 0;
+  padding-left: 1.25rem;
+}
+
+.auth-page__errors li {
+  margin-bottom: 0.25rem;
+}
+
+.auth-page__errors li:last-child {
+  margin-bottom: 0;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .auth-page {
+    padding: 6rem 2rem;
+  }
+}

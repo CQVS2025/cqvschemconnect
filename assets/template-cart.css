@@ -1,0 +1,204 @@
+/* ==========================================================================
+   Template: Cart Page
+   Dark-themed Shopify B2B Chemical Marketplace
+   Mobile-first approach
+   ========================================================================== */
+
+/* Design Tokens (as CSS custom properties scoped to this template) */
+:root {
+  --accent: #00d9a3;
+  --card-bg: #1e2d3d;
+  --card-hover: #243447;
+  --section-bg: #1a2332;
+  --page-bg: #0f1923;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: #2a3f5f;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --input-bg: #162231;
+  --input-focus-bg: #1a2b3d;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Cart Page Container
+   -------------------------------------------------------------------------- */
+
+.cart-page {
+  padding: 3rem 1rem;
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Heading
+   -------------------------------------------------------------------------- */
+
+.cart-page__heading {
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Empty State
+   -------------------------------------------------------------------------- */
+
+.cart-page__empty {
+  text-align: center;
+  padding: 4rem 0;
+}
+
+.cart-page__empty-text {
+  color: var(--text-secondary);
+  font-size: 1.125rem;
+  margin-bottom: 1.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   Cart Item
+   -------------------------------------------------------------------------- */
+
+.cart-item {
+  display: grid;
+  grid-template-columns: 80px 1fr auto;
+  gap: 1rem;
+  align-items: center;
+  padding: 1.5rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.cart-item__image {
+  width: 80px;
+  height: 80px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  display: block;
+}
+
+.cart-item__details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.cart-item__title {
+  font-weight: 600;
+  color: var(--text-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cart-item__title:hover {
+  color: var(--accent);
+}
+
+.cart-item__variant {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.cart-item__unit-price {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.cart-item__actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-item__total {
+  font-weight: 600;
+  color: var(--text-primary);
+  font-size: 1.125rem;
+  white-space: nowrap;
+}
+
+.cart-item__remove {
+  background: transparent;
+  border: none;
+  color: var(--danger);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  transition: text-decoration 0.2s ease;
+}
+
+.cart-item__remove:hover {
+  text-decoration: underline;
+}
+
+/* --------------------------------------------------------------------------
+   Cart Summary
+   -------------------------------------------------------------------------- */
+
+.cart-page__summary {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+}
+
+.cart-page__subtotal {
+  display: flex;
+  justify-content: space-between;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: var(--text-primary);
+}
+
+.cart-page__loyalty {
+  margin-bottom: 2rem;
+}
+
+.cart-page__checkout {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+  margin-left: auto;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+/* Mobile stacked layout */
+@media (max-width: 639px) {
+  .cart-item {
+    grid-template-columns: 80px 1fr;
+    grid-template-rows: auto auto;
+    gap: 0.75rem;
+  }
+
+  .cart-item__image {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  .cart-item__details {
+    grid-row: 1;
+    grid-column: 2;
+  }
+
+  .cart-item__actions {
+    grid-row: 2;
+    grid-column: 1 / -1;
+    justify-content: space-between;
+    padding-top: 0.5rem;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .cart-page {
+    padding: 6rem 2rem;
+  }
+}

@@ -1,0 +1,155 @@
+/* ==========================================================================
+   Section: Footer
+   Site footer with logo, links, and copyright
+   Design tokens: accent #00d9a3, card bg #1e2d3d, section bg #1a2332,
+                  text primary #ffffff, text secondary #94a3b8,
+                  border #2a3f5f, radius-lg 12px, radius-md 8px
+   ========================================================================== */
+
+/* ---------- Base ---------- */
+.footer {
+  border-top: 1px solid #2a3f5f;
+  padding: 3rem 0;
+}
+
+.footer__inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+  text-align: center;
+}
+
+/* ---------- Logo ---------- */
+.footer__logo {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  text-decoration: none;
+  margin-bottom: 1rem;
+}
+
+.footer__logo-text {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.footer__logo-text--brand {
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.footer__logo-text--accent {
+  font-weight: 600;
+  color: #00d9a3;
+}
+
+/* ---------- Tagline ---------- */
+.footer__tagline {
+  color: #94a3b8;
+  font-size: 0.9375rem;
+  margin: 0 0 1.5rem;
+  line-height: 1.5;
+}
+
+/* ---------- Navigation links ---------- */
+.footer__links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.footer__link {
+  color: #64748b;
+  font-size: 0.875rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer__link:hover,
+.footer__link:focus-visible {
+  color: #ffffff;
+}
+
+/* ---------- Social icons ---------- */
+.footer__social {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer__social-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: #64748b;
+  border-radius: 8px;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+
+.footer__social-link:hover {
+  color: #00d9a3;
+  background-color: rgba(0, 217, 163, 0.08);
+}
+
+.footer__social-link svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* ---------- Divider ---------- */
+.footer__divider {
+  width: 100%;
+  height: 1px;
+  background-color: #2a3f5f;
+  margin-bottom: 1.5rem;
+  border: none;
+}
+
+/* ---------- Copyright ---------- */
+.footer__copyright {
+  color: #64748b;
+  font-size: 0.75rem;
+  margin: 0;
+  line-height: 1.5;
+}
+
+.footer__copyright a {
+  color: #94a3b8;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer__copyright a:hover {
+  color: #00d9a3;
+}
+
+/* ==========================================================================
+   Breakpoint: 640px (tablet)
+   ========================================================================== */
+@media screen and (min-width: 640px) {
+  .footer__inner {
+    padding: 0 1.5rem;
+  }
+
+  .footer__links {
+    gap: 2rem;
+  }
+}
+
+/* ==========================================================================
+   Breakpoint: 1024px (desktop)
+   ========================================================================== */
+@media screen and (min-width: 1024px) {
+  .footer {
+    padding: 4rem 0;
+  }
+
+  .footer__inner {
+    padding: 0 2rem;
+  }
+}

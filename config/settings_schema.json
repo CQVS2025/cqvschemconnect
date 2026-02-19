@@ -1,0 +1,134 @@
+[
+  {
+    "name": "theme_info",
+    "theme_name": "CQVS Chem Connect",
+    "theme_version": "1.0.0",
+    "theme_author": "CQVS",
+    "theme_documentation_url": "",
+    "theme_support_url": ""
+  },
+  {
+    "name": "Brand",
+    "settings": [
+      {
+        "type": "image_picker",
+        "id": "logo_image",
+        "label": "Logo image"
+      },
+      {
+        "type": "text",
+        "id": "store_name",
+        "label": "Store name",
+        "default": "Chem Connect"
+      },
+      {
+        "type": "textarea",
+        "id": "tagline",
+        "label": "Tagline",
+        "default": "Australia's chemical marketplace for concrete & quarry"
+      }
+    ]
+  },
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_bg_page",
+        "label": "Page background",
+        "default": "#0f1923"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_section",
+        "label": "Section background",
+        "default": "#1a2332"
+      },
+      {
+        "type": "color",
+        "id": "color_bg_card",
+        "label": "Card background",
+        "default": "#1e2d3d"
+      },
+      {
+        "type": "color",
+        "id": "color_accent",
+        "label": "Accent color",
+        "default": "#00d9a3"
+      },
+      {
+        "type": "color",
+        "id": "color_accent_hover",
+        "label": "Accent hover",
+        "default": "#00c494"
+      },
+      {
+        "type": "color",
+        "id": "color_text_primary",
+        "label": "Primary text",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "color_text_secondary",
+        "label": "Secondary text",
+        "default": "#94a3b8"
+      },
+      {
+        "type": "color",
+        "id": "color_border",
+        "label": "Border color",
+        "default": "#2a3f5f"
+      }
+    ]
+  },
+  {
+    "name": "Loyalty Program",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "loyalty_enabled",
+        "label": "Enable loyalty program",
+        "default": true
+      },
+      {
+        "type": "number",
+        "id": "loyalty_target_litres",
+        "label": "Target litres for reward",
+        "default": 10000
+      },
+      {
+        "type": "number",
+        "id": "loyalty_reward_litres",
+        "label": "Reward litres",
+        "default": 1000
+      },
+      {
+        "type": "text",
+        "id": "loyalty_program_name",
+        "label": "Program name",
+        "default": "IBC Loyalty Rewards"
+      }
+    ]
+  },
+  {
+    "name": "Social Media",
+    "settings": [
+      {
+        "type": "url",
+        "id": "social_facebook",
+        "label": "Facebook URL"
+      },
+      {
+        "type": "url",
+        "id": "social_instagram",
+        "label": "Instagram URL"
+      },
+      {
+        "type": "url",
+        "id": "social_linkedin",
+        "label": "LinkedIn URL"
+      }
+    ]
+  }
+]

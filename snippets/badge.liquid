@@ -1,0 +1,12 @@
+{%- comment -%}
+  Badge component
+  Accepts:
+    - type: "danger" | "warning" | "success" | "info" (string)
+    - text: badge label (string)
+{%- endcomment -%}
+
+{%- if text != blank -%}
+  <span class="badge badge--{{ type | default: 'info' }}">
+    {{- text | escape -}}
+  </span>
+{%- endif -%}

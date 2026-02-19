@@ -1,0 +1,283 @@
+<section class="features" data-section-id="{{ section.id }}" data-section-type="features">
+  <div class="features__container container">
+    <div class="features__header">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="features__heading">{{ section.settings.heading }}</h2>
+      {%- endif -%}
+
+      {%- if section.settings.subheading != blank -%}
+        <p class="features__subheading">{{ section.settings.subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="features__grid">
+        {%- for block in section.blocks -%}
+          <div class="features__card" {{ block.shopify_attributes }}>
+            <div class="features__icon">
+              {%- case block.settings.icon -%}
+                {%- when 'truck' -%}
+                  {% render 'icon-truck' %}
+                {%- when 'factory' -%}
+                  {% render 'icon-factory' %}
+                {%- when 'shield' -%}
+                  {% render 'icon-shield' %}
+                {%- when 'clock' -%}
+                  {% render 'icon-clock' %}
+                {%- when 'lock' -%}
+                  {% render 'icon-lock' %}
+                {%- when 'cart' -%}
+                  {% render 'icon-cart' %}
+                {%- when 'search' -%}
+                  {% render 'icon-search' %}
+                {%- when 'star' -%}
+                  {% render 'icon-star' %}
+                {%- when 'gift' -%}
+                  {% render 'icon-gift' %}
+                {%- when 'check' -%}
+                  {% render 'icon-check' %}
+                {%- when 'warning' -%}
+                  {% render 'icon-warning' %}
+                {%- when 'document' -%}
+                  {% render 'icon-document' %}
+                {%- when 'chart' -%}
+                  {% render 'icon-chart' %}
+                {%- when 'users' -%}
+                  {% render 'icon-users' %}
+                {%- when 'refresh' -%}
+                  {% render 'icon-refresh' %}
+              {%- endcase -%}
+            </div>
+
+            {%- if block.settings.title != blank -%}
+              <h3 class="features__title">{{ block.settings.title }}</h3>
+            {%- endif -%}
+
+            {%- if block.settings.description != blank -%}
+              <p class="features__description">{{ block.settings.description }}</p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+<style>
+  .features {
+    background-color: var(--color-bg-card, #141414);
+    padding: 4rem 0;
+  }
+
+  .features__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .features__header {
+    text-align: center;
+    margin-bottom: 3rem;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .features__heading {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 1rem;
+  }
+
+  @media (min-width: 768px) {
+    .features__heading {
+      font-size: 2.5rem;
+    }
+  }
+
+  .features__subheading {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #b0b0b0);
+    margin: 0;
+  }
+
+  .features__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .features__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .features__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .features__card {
+    background-color: var(--color-bg-dark, #0a0a0a);
+    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    padding: 2rem;
+    transition: border-color 0.3s ease, transform 0.3s ease;
+  }
+
+  .features__card:hover {
+    border-color: var(--color-accent, #00d4aa);
+    transform: translateY(-4px);
+  }
+
+  .features__icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    margin-bottom: 1.25rem;
+    background-color: rgba(0, 212, 170, 0.1);
+    border-radius: 10px;
+    color: var(--color-accent, #00d4aa);
+  }
+
+  .features__icon svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  .features__title {
+    font-size: 1.0625rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 0 0.625rem;
+  }
+
+  .features__description {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #b0b0b0);
+    margin: 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Features",
+  "class": "section-features",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Built for Industrial Buyers"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Everything you need to manage your chemical procurement in one place."
+    }
+  ],
+  "blocks": [
+    {
+      "type": "feature",
+      "name": "Feature",
+      "limit": 10,
+      "settings": [
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "truck", "label": "Truck (Delivery)" },
+            { "value": "factory", "label": "Factory (Manufacturing)" },
+            { "value": "shield", "label": "Shield (Protection)" },
+            { "value": "clock", "label": "Clock (Time)" },
+            { "value": "lock", "label": "Lock (Security)" },
+            { "value": "cart", "label": "Cart (Shopping)" },
+            { "value": "search", "label": "Search" },
+            { "value": "star", "label": "Star (Quality)" },
+            { "value": "gift", "label": "Gift (Rewards)" },
+            { "value": "check", "label": "Check (Verified)" },
+            { "value": "warning", "label": "Warning (Safety)" },
+            { "value": "document", "label": "Document" },
+            { "value": "chart", "label": "Chart (Analytics)" },
+            { "value": "users", "label": "Users (Team)" },
+            { "value": "refresh", "label": "Refresh (Reorder)" }
+          ],
+          "default": "check"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 10,
+  "presets": [
+    {
+      "name": "Features",
+      "settings": {
+        "heading": "Built for Industrial Buyers",
+        "subheading": "Everything you need to manage your chemical procurement in one place."
+      },
+      "blocks": [
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "document",
+            "title": "SDS Documentation",
+            "description": "Access Safety Data Sheets for every product. Download, view, and share compliance documentation instantly."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "refresh",
+            "title": "Easy Reordering",
+            "description": "Reorder your regular chemicals in one click. Set up recurring orders to never run out of stock."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "chart",
+            "title": "Volume Pricing",
+            "description": "Transparent tiered pricing based on order volume. The more you order, the more you save."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "lock",
+            "title": "Secure Checkout",
+            "description": "Enterprise-grade security for every transaction. Pay by credit card, EFT, or approved trade terms."
+          }
+        },
+        {
+          "type": "feature",
+          "settings": {
+            "icon": "truck",
+            "title": "Australia-Wide Delivery",
+            "description": "Reliable delivery to any site across Australia. Real-time tracking from dispatch to delivery."
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

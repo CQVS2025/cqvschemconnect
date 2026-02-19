@@ -1,0 +1,40 @@
+{%- comment -%}
+  Quantity input component
+  Accepts:
+    - value: initial quantity (default 1)
+    - name: input name attribute (default "quantity")
+    - min: minimum value (default 1)
+    - id: optional id prefix
+{%- endcomment -%}
+
+{%- assign qty_value = value | default: 1 -%}
+{%- assign qty_name = name | default: 'quantity' -%}
+{%- assign qty_min = min | default: 1 -%}
+
+<div class="quantity-input">
+  <button
+    type="button"
+    class="quantity-input__btn quantity-input__btn--minus"
+    aria-label="{{ 'products.product.decrease_quantity' | t }}"
+    data-action="decrease"
+  >
+    {%- render 'icon-minus' -%}
+  </button>
+  <input
+    type="number"
+    class="quantity-input__field"
+    name="{{ qty_name }}"
+    value="{{ qty_value }}"
+    min="{{ qty_min }}"
+    aria-label="{{ 'products.product.quantity' | t }}"
+    {% if id %}id="{{ id }}-quantity"{% endif %}
+  >
+  <button
+    type="button"
+    class="quantity-input__btn quantity-input__btn--plus"
+    aria-label="{{ 'products.product.increase_quantity' | t }}"
+    data-action="increase"
+  >
+    {%- render 'icon-plus' -%}
+  </button>
+</div>

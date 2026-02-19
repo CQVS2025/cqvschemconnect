@@ -1,0 +1,320 @@
+/* ==========================================================================
+   Template: Product Page
+   Dark-themed Shopify B2B Chemical Marketplace
+   Mobile-first approach
+   ========================================================================== */
+
+/* Design Tokens (as CSS custom properties scoped to this template) */
+:root {
+  --accent: #00d9a3;
+  --card-bg: #1e2d3d;
+  --card-hover: #243447;
+  --section-bg: #1a2332;
+  --page-bg: #0f1923;
+  --text-primary: #ffffff;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --border: #2a3f5f;
+  --success: #22c55e;
+  --danger: #ef4444;
+  --input-bg: #162231;
+  --input-focus-bg: #1a2b3d;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+}
+
+/* --------------------------------------------------------------------------
+   Product Page Section
+   -------------------------------------------------------------------------- */
+
+.product-page {
+  padding: 3rem 1rem;
+  background-color: var(--page-bg);
+  color: var(--text-primary);
+}
+
+/* --------------------------------------------------------------------------
+   Product Grid
+   -------------------------------------------------------------------------- */
+
+.product-page__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  max-width: 1280px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Gallery
+   -------------------------------------------------------------------------- */
+
+.product-page__gallery {
+  position: relative;
+}
+
+.product-page__main-image {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  aspect-ratio: 1;
+  object-fit: cover;
+  display: block;
+}
+
+.product-page__thumbs {
+  display: flex;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  overflow-x: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border) transparent;
+}
+
+.product-page__thumbs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.product-page__thumbs::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.product-page__thumbs::-webkit-scrollbar-thumb {
+  background-color: var(--border);
+  border-radius: 2px;
+}
+
+.product-page__thumb {
+  width: 72px;
+  height: 72px;
+  min-width: 72px;
+  border-radius: var(--radius-md);
+  object-fit: cover;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: opacity 0.2s ease, border-color 0.2s ease;
+  opacity: 0.6;
+}
+
+.product-page__thumb:hover,
+.product-page__thumb.is-active {
+  opacity: 1;
+  border-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Product Info
+   -------------------------------------------------------------------------- */
+
+.product-page__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.product-page__title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Badges
+   -------------------------------------------------------------------------- */
+
+.product-page__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 1rem 0;
+}
+
+/* --------------------------------------------------------------------------
+   Price
+   -------------------------------------------------------------------------- */
+
+.product-page__price {
+  margin: 1rem 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+}
+
+.product-page__price-total {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.product-page__price-unit {
+  font-size: 1.125rem;
+  color: var(--accent);
+  margin-left: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Form / Add to Cart
+   -------------------------------------------------------------------------- */
+
+.product-page__form {
+  margin-top: 1.5rem;
+}
+
+.product-page__form-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+/* --------------------------------------------------------------------------
+   Quantity Input
+   -------------------------------------------------------------------------- */
+
+.quantity-input {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+}
+
+.quantity-input__btn {
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.125rem;
+  transition: background-color 0.2s ease;
+}
+
+.quantity-input__btn:hover {
+  background-color: var(--card-hover);
+}
+
+.quantity-input__field {
+  width: 60px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  text-align: center;
+  font-size: 1rem;
+  -moz-appearance: textfield;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.quantity-input__field::-webkit-inner-spin-button,
+.quantity-input__field::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* --------------------------------------------------------------------------
+   Description
+   -------------------------------------------------------------------------- */
+
+.product-page__description {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  color: var(--text-secondary);
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+.product-page__description h1,
+.product-page__description h2,
+.product-page__description h3,
+.product-page__description h4,
+.product-page__description h5,
+.product-page__description h6 {
+  color: var(--text-primary);
+  margin: 1.5rem 0 0.75rem;
+}
+
+.product-page__description ul,
+.product-page__description ol {
+  padding-left: 1.5rem;
+  margin: 0.75rem 0;
+}
+
+.product-page__description li {
+  margin-bottom: 0.25rem;
+}
+
+.product-page__description a {
+  color: var(--accent);
+  text-decoration: underline;
+}
+
+.product-page__description a:hover {
+  opacity: 0.85;
+}
+
+/* --------------------------------------------------------------------------
+   Research Section
+   -------------------------------------------------------------------------- */
+
+.product-page__research {
+  margin-top: 3rem;
+}
+
+/* --------------------------------------------------------------------------
+   Related Products
+   -------------------------------------------------------------------------- */
+
+.product-page__related {
+  margin-top: 4rem;
+  padding-top: 4rem;
+  border-top: 1px solid var(--border);
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.product-page__related-heading {
+  margin-bottom: 2rem;
+  color: var(--text-primary);
+}
+
+.product-page__related-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* ==========================================================================
+   Responsive Breakpoints
+   ========================================================================== */
+
+/* Tablet (640px+) */
+@media (min-width: 640px) {
+  .product-page__related-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .product-page {
+    padding: 6rem 2rem;
+  }
+
+  .product-page__grid {
+    grid-template-columns: 55fr 45fr;
+  }
+
+  .product-page__related-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

@@ -1,0 +1,102 @@
+<section class="search-page">
+  <div class="container">
+
+    <h1 class="search-page__heading">{{ section.settings.heading }}</h1>
+
+    {%- comment -%} Search form {%- endcomment -%}
+    <div class="search-page__form-wrap">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="search-page__form">
+        <label for="search-input" class="visually-hidden">{{ 'general.search.placeholder' | t }}</label>
+        <input
+          type="search"
+          id="search-input"
+          name="q"
+          class="search-page__input"
+          placeholder="{{ 'general.search.placeholder' | t }}"
+          value="{{ search.terms | escape }}"
+          autocomplete="off"
+          autocorrect="off"
+          autocapitalize="off"
+        >
+        <button type="submit" class="btn btn--primary search-page__submit" aria-label="{{ 'general.search.submit' | t }}">
+          {%- render 'icon-search' -%}
+          <span>{{ 'general.search.submit' | t }}</span>
+        </button>
+      </form>
+    </div>
+
+    {%- comment -%} Search results {%- endcomment -%}
+    {%- if search.performed -%}
+      {%- if search.results_count > 0 -%}
+        <p class="search-page__results-count">
+          {{ 'general.search.results_count' | t: count: search.results_count, terms: search.terms }}
+        </p>
+
+        <div class="search-page__results">
+          {%- for result in search.results -%}
+            {%- case result.object_type -%}
+
+              {%- when 'product' -%}
+                {% render 'product-card', product: result %}
+
+              {%- when 'page' -%}
+                <article class="search-page__result-item">
+                  <h3 class="search-page__result-title">
+                    <a href="{{ result.url }}">{{ result.title | escape }}</a>
+                  </h3>
+                  {%- if result.content != blank -%}
+                    <p class="search-page__result-excerpt">{{ result.content | strip_html | truncatewords: 30 }}</p>
+                  {%- endif -%}
+                  <span class="search-page__result-type">{{ 'general.search.page' | t }}</span>
+                </article>
+
+              {%- when 'article' -%}
+                <article class="search-page__result-item">
+                  <h3 class="search-page__result-title">
+                    <a href="{{ result.url }}">{{ result.title | escape }}</a>
+                  </h3>
+                  {%- if result.excerpt != blank -%}
+                    <p class="search-page__result-excerpt">{{ result.excerpt | strip_html | truncatewords: 30 }}</p>
+                  {%- elsif result.content != blank -%}
+                    <p class="search-page__result-excerpt">{{ result.content | strip_html | truncatewords: 30 }}</p>
+                  {%- endif -%}
+                  <span class="search-page__result-type">{{ 'general.search.article' | t }}</span>
+                </article>
+
+            {%- endcase -%}
+          {%- endfor -%}
+        </div>
+
+        {%- if paginate -%}
+          {%- if paginate.pages > 1 -%}
+            <nav class="search-page__pagination" aria-label="{{ 'general.pagination.label' | t }}">
+              {{ paginate | default_pagination }}
+            </nav>
+          {%- endif -%}
+        {%- endif -%}
+
+      {%- else -%}
+        <div class="search-page__no-results">
+          <p>{{ 'general.search.no_results' | t: terms: search.terms }}</p>
+        </div>
+      {%- endif -%}
+    {%- endif -%}
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Search page",
+  "tag": "section",
+  "class": "section-main-search",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "t:sections.main_search.settings.heading.label",
+      "default": "Search"
+    }
+  ]
+}
+{% endschema %}

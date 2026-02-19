@@ -1,0 +1,200 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {
+        "heading": "Bulk Chemicals. Unbeatable Prices.",
+        "subheading": "Australia's first direct-to-plant chemical marketplace for concrete and quarry operations.",
+        "primary_button_text": "Browse Products",
+        "primary_button_link": "#products",
+        "secondary_button_text": "How it Works",
+        "secondary_button_link": "#how-it-works",
+        "featured_badge_text": "Most Popular"
+      }
+    },
+    "loyalty_banner": {
+      "type": "loyalty-banner",
+      "settings": {
+        "heading": "IBC Loyalty Rewards",
+        "description": "Order 10,000L of any IBC product and earn 1,000L FREE of your most-ordered product. Sign up to start tracking your rewards.",
+        "cta_text": "Sign Up & Start Earning",
+        "cta_link": "/account/register",
+        "fine_print": "Available on IBC orders only. Reward delivered as a unique discount code for your most-ordered IBC product.",
+        "demo_progress_percent": 75,
+        "show_section": true
+      }
+    },
+    "value_props": {
+      "type": "value-props",
+      "settings": {
+        "heading": "Why Chem Connect?"
+      },
+      "blocks": {
+        "vp1": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "factory",
+            "title": "Direct from Manufacturers",
+            "description": "No middlemen. Buy directly from Australian chemical manufacturers."
+          }
+        },
+        "vp2": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "truck",
+            "title": "Ships from Your State",
+            "description": "Local warehousing across QLD, NSW, VIC, WA & TAS."
+          }
+        },
+        "vp3": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "clock",
+            "title": "2-5 Day Delivery",
+            "description": "Fast delivery direct to your plant or quarry site."
+          }
+        },
+        "vp4": {
+          "type": "value_prop",
+          "settings": {
+            "icon": "lock",
+            "title": "Locked-In Pricing",
+            "description": "Transparent pricing with no hidden fees or surcharges."
+          }
+        }
+      },
+      "block_order": ["vp1", "vp2", "vp3", "vp4"]
+    },
+    "product_grid": {
+      "type": "product-grid",
+      "settings": {
+        "heading": "Products",
+        "section_id": "products",
+        "max_products": 20,
+        "columns_desktop": "3",
+        "show_research": true,
+        "show_badges": true,
+        "show_add_to_cart": true
+      }
+    },
+    "product_request": {
+      "type": "product-request",
+      "settings": {
+        "heading": "Don't See What You Need?",
+        "subheading": "Tell us what chemicals you're looking for and we'll source them for you.",
+        "button_text": "Request Product",
+        "success_message": "Thanks! We'll get back to you within 24 hours."
+      }
+    },
+    "how_it_works": {
+      "type": "how-it-works",
+      "settings": {
+        "heading": "How it Works",
+        "section_id": "how-it-works"
+      },
+      "blocks": {
+        "s1": {
+          "type": "step",
+          "settings": {
+            "number": "1",
+            "title": "Register",
+            "description": "Create your free Chem Connect account in 60 seconds"
+          }
+        },
+        "s2": {
+          "type": "step",
+          "settings": {
+            "number": "2",
+            "title": "Live Alerts",
+            "description": "Get notified when products match your needs and budget"
+          }
+        },
+        "s3": {
+          "type": "step",
+          "settings": {
+            "number": "3",
+            "title": "One Click Order",
+            "description": "Order IBCs and drums with one click, delivered to your site"
+          }
+        },
+        "s4": {
+          "type": "step",
+          "settings": {
+            "number": "4",
+            "title": "Delivered",
+            "description": "Fast delivery from local warehouses across Australia"
+          }
+        }
+      },
+      "block_order": ["s1", "s2", "s3", "s4"]
+    },
+    "features": {
+      "type": "features",
+      "settings": {
+        "heading": "Built for Concrete Plants",
+        "subheading": "Everything you need to keep your operations running"
+      },
+      "blocks": {
+        "f1": {
+          "type": "feature",
+          "settings": {
+            "icon": "cart",
+            "title": "One Click Ordering",
+            "description": "Reorder your regular chemicals with a single click"
+          }
+        },
+        "f2": {
+          "type": "feature",
+          "settings": {
+            "icon": "factory",
+            "title": "Local Manufacturers",
+            "description": "Connected to manufacturers in every Australian state"
+          }
+        },
+        "f3": {
+          "type": "feature",
+          "settings": {
+            "icon": "star",
+            "title": "Early Access Pricing",
+            "description": "Loyalty members get first access to new products and pricing"
+          }
+        },
+        "f4": {
+          "type": "feature",
+          "settings": {
+            "icon": "search",
+            "title": "Live Inventory",
+            "description": "Real-time stock levels so you never order out-of-stock products"
+          }
+        },
+        "f5": {
+          "type": "feature",
+          "settings": {
+            "icon": "shield",
+            "title": "Direct Support",
+            "description": "Talk to real people who understand the concrete industry"
+          }
+        }
+      },
+      "block_order": ["f1", "f2", "f3", "f4", "f5"]
+    },
+    "cta_banner": {
+      "type": "cta-banner",
+      "settings": {
+        "heading": "Ready to Save on Your Chemical Costs?",
+        "button_text": "Create Free Account",
+        "button_link": "/account/register"
+      }
+    }
+  },
+  "order": [
+    "hero",
+    "loyalty_banner",
+    "value_props",
+    "product_grid",
+    "product_request",
+    "how_it_works",
+    "features",
+    "cta_banner"
+  ]
+}

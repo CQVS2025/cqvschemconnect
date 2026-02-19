@@ -1,0 +1,329 @@
+<section class="product-request" data-section-id="{{ section.id }}" data-section-type="product-request">
+  <div class="product-request__container container">
+    <div class="product-request__inner">
+      <div class="product-request__header">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="product-request__heading">{{ section.settings.heading }}</h2>
+        {%- endif -%}
+
+        {%- if section.settings.subheading != blank -%}
+          <p class="product-request__subheading">{{ section.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+
+      <div class="product-request__form-wrapper">
+        {%- form 'contact' -%}
+          {%- if form.posted_successfully? -%}
+            <div class="product-request__success" role="status">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                <polyline points="22 4 12 14.01 9 11.01"/>
+              </svg>
+              <p class="product-request__success-text">
+                {{ section.settings.success_message | default: 'Thank you! Your product request has been submitted. Our team will be in touch shortly.' }}
+              </p>
+            </div>
+          {%- endif -%}
+
+          {%- if form.errors -%}
+            <div class="product-request__errors" role="alert">
+              <h3 class="product-request__errors-heading">{{ 'sections.product_request.error_heading' | t | default: 'Please correct the following:' }}</h3>
+              <ul class="product-request__errors-list">
+                {%- for field in form.errors -%}
+                  <li class="product-request__error-item">
+                    {{ form.errors.messages[field] }}
+                  </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+          {%- endif -%}
+
+          {%- comment -%} Hidden subject field {%- endcomment -%}
+          <input type="hidden" name="contact[subject]" value="Product Request">
+
+          <div class="product-request__fields">
+            {%- comment -%} Product Name {%- endcomment -%}
+            <div class="product-request__field">
+              <label for="product-request-name-{{ section.id }}" class="product-request__label">
+                {{ 'sections.product_request.product_name_label' | t | default: 'Product / Chemical Name' }}
+                <span class="product-request__required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="text"
+                id="product-request-name-{{ section.id }}"
+                name="contact[product_name]"
+                class="product-request__input"
+                placeholder="{{ 'sections.product_request.product_name_placeholder' | t | default: 'e.g. Calcium Chloride, Sodium Hypochlorite' }}"
+                required
+              >
+            </div>
+
+            {%- comment -%} Volume {%- endcomment -%}
+            <div class="product-request__field">
+              <label for="product-request-volume-{{ section.id }}" class="product-request__label">
+                {{ 'sections.product_request.volume_label' | t | default: 'Estimated Volume Required' }}
+              </label>
+              <input
+                type="text"
+                id="product-request-volume-{{ section.id }}"
+                name="contact[volume]"
+                class="product-request__input"
+                placeholder="{{ 'sections.product_request.volume_placeholder' | t | default: 'e.g. 1000L per month, 5 IBCs' }}"
+              >
+            </div>
+
+            {%- comment -%} Email {%- endcomment -%}
+            <div class="product-request__field">
+              <label for="product-request-email-{{ section.id }}" class="product-request__label">
+                {{ 'sections.product_request.email_label' | t | default: 'Email Address' }}
+                <span class="product-request__required" aria-hidden="true">*</span>
+              </label>
+              <input
+                type="email"
+                id="product-request-email-{{ section.id }}"
+                name="contact[email]"
+                class="product-request__input"
+                placeholder="{{ 'sections.product_request.email_placeholder' | t | default: 'you@company.com.au' }}"
+                value="{% if customer %}{{ customer.email }}{% endif %}"
+                required
+                autocomplete="email"
+              >
+            </div>
+
+            {%- comment -%} Hidden body textarea for Shopify contact form requirements {%- endcomment -%}
+            <textarea
+              name="contact[body]"
+              class="product-request__hidden-body visually-hidden"
+              aria-hidden="true"
+              tabindex="-1"
+            >Product request submitted via website form.</textarea>
+          </div>
+
+          <div class="product-request__submit">
+            <button type="submit" class="button button--primary product-request__button">
+              {{ section.settings.button_text | default: 'Request Product' }}
+            </button>
+          </div>
+        {%- endform -%}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .product-request {
+    background-color: var(--color-bg-dark, #0a0a0a);
+    padding: 4rem 0;
+  }
+
+  .product-request__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .product-request__inner {
+    max-width: 640px;
+    margin: 0 auto;
+    background-color: var(--color-bg-card, #141414);
+    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border-radius: 12px;
+    padding: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .product-request__inner {
+      padding: 3rem;
+    }
+  }
+
+  .product-request__header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+
+  .product-request__heading {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin: 0 0 0.75rem;
+  }
+
+  @media (min-width: 768px) {
+    .product-request__heading {
+      font-size: 2rem;
+    }
+  }
+
+  .product-request__subheading {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #b0b0b0);
+    margin: 0;
+  }
+
+  /* Success Message */
+  .product-request__success {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.75rem;
+    background-color: rgba(0, 212, 170, 0.1);
+    border: 1px solid var(--color-accent, #00d4aa);
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: var(--color-accent, #00d4aa);
+  }
+
+  .product-request__success svg {
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .product-request__success-text {
+    margin: 0;
+    font-size: 0.9375rem;
+    line-height: 1.5;
+  }
+
+  /* Error Messages */
+  .product-request__errors {
+    background-color: rgba(239, 68, 68, 0.1);
+    border: 1px solid #ef4444;
+    border-radius: 8px;
+    padding: 1.25rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .product-request__errors-heading {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #ef4444;
+    margin: 0 0 0.5rem;
+  }
+
+  .product-request__errors-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .product-request__error-item {
+    font-size: 0.875rem;
+    color: #ef4444;
+    margin-bottom: 0.25rem;
+  }
+
+  .product-request__error-item:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Form Fields */
+  .product-request__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+  }
+
+  .product-request__field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .product-request__label {
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-text-muted, #b0b0b0);
+  }
+
+  .product-request__required {
+    color: var(--color-accent, #00d4aa);
+  }
+
+  .product-request__input {
+    background-color: var(--color-bg-dark, #0a0a0a);
+    border: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    color: #ffffff;
+    transition: border-color 0.2s ease;
+    width: 100%;
+  }
+
+  .product-request__input::placeholder {
+    color: rgba(255, 255, 255, 0.3);
+  }
+
+  .product-request__input:focus {
+    outline: none;
+    border-color: var(--color-accent, #00d4aa);
+    box-shadow: 0 0 0 2px rgba(0, 212, 170, 0.15);
+  }
+
+  .product-request__hidden-body {
+    position: absolute !important;
+    width: 1px !important;
+    height: 1px !important;
+    padding: 0 !important;
+    margin: -1px !important;
+    overflow: hidden !important;
+    clip: rect(0, 0, 0, 0) !important;
+    white-space: nowrap !important;
+    border: 0 !important;
+  }
+
+  .product-request__submit {
+    margin-top: 1.5rem;
+  }
+
+  .product-request__button {
+    width: 100%;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Request",
+  "class": "section-product-request",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Can't Find What You Need?"
+    },
+    {
+      "type": "textarea",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Tell us which chemical product you're looking for and we'll source it for you from our network of Australian manufacturers."
+    },
+    {
+      "type": "text",
+      "id": "button_text",
+      "label": "Submit button text",
+      "default": "Request Product"
+    },
+    {
+      "type": "text",
+      "id": "success_message",
+      "label": "Success message",
+      "default": "Thank you! Your product request has been submitted. Our team will be in touch shortly."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Product Request",
+      "settings": {
+        "heading": "Can't Find What You Need?",
+        "subheading": "Tell us which chemical product you're looking for and we'll source it for you from our network of Australian manufacturers.",
+        "button_text": "Request Product",
+        "success_message": "Thank you! Your product request has been submitted. Our team will be in touch shortly."
+      }
+    }
+  ]
+}
+{% endschema %}

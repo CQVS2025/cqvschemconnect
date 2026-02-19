@@ -1,0 +1,159 @@
+{%- if customer -%}
+  <section class="account-page">
+    <div class="container">
+
+      {%- comment -%} Welcome heading {%- endcomment -%}
+      <h1 class="account-page__heading">
+        {{ 'customer.account.welcome' | t }}, {{ customer.first_name | escape }}
+      </h1>
+
+      {%- comment -%} Loyalty section {%- endcomment -%}
+      {%- if section.settings.show_loyalty -%}
+        <div class="account-page__loyalty">
+          {%- if customer.metafields.loyalty.enrolled -%}
+            <div class="account-page__loyalty-card">
+              <h2 class="account-page__section-title">{{ 'loyalty.program_name' | t }}</h2>
+
+              {%- comment -%} Loyalty progress bar {%- endcomment -%}
+              {% render 'loyalty-progress-bar' %}
+
+              {%- comment -%} Loyalty stats {%- endcomment -%}
+              <div class="account-page__loyalty-stats">
+                <div class="account-page__stat">
+                  <span class="account-page__stat-value">
+                    {{ customer.metafields.loyalty.rewards_earned | default: 0 }}
+                  </span>
+                  <span class="account-page__stat-label">{{ 'loyalty.rewards_earned' | t }}</span>
+                </div>
+                <div class="account-page__stat">
+                  <span class="account-page__stat-value">
+                    {{ customer.metafields.loyalty.total_ibc_litres | default: 0 }}L
+                  </span>
+                  <span class="account-page__stat-label">{{ 'loyalty.total_litres' | t }}</span>
+                </div>
+                <div class="account-page__stat">
+                  <span class="account-page__stat-value">
+                    {{ customer.metafields.loyalty.most_ordered_product | default: '-' }}
+                  </span>
+                  <span class="account-page__stat-label">{{ 'loyalty.most_ordered' | t }}</span>
+                </div>
+              </div>
+
+              {%- comment -%} Active discount code {%- endcomment -%}
+              {%- if customer.metafields.loyalty.active_discount_code != blank -%}
+                <div class="account-page__discount">
+                  <span class="account-page__discount-label">{{ 'loyalty.your_discount' | t }}</span>
+                  <div class="account-page__discount-code-wrap">
+                    <code class="account-page__discount-code" data-code="{{ customer.metafields.loyalty.active_discount_code }}">
+                      {{ customer.metafields.loyalty.active_discount_code }}
+                    </code>
+                    <button
+                      type="button"
+                      class="account-page__copy-btn"
+                      data-copy-target="{{ customer.metafields.loyalty.active_discount_code }}"
+                      aria-label="{{ 'loyalty.copy_code' | t }}"
+                    >
+                      {%- render 'icon-copy' -%}
+                      <span>{{ 'loyalty.copy_code' | t }}</span>
+                    </button>
+                  </div>
+                </div>
+              {%- endif -%}
+            </div>
+
+          {%- else -%}
+            {%- comment -%} Enrollment CTA {%- endcomment -%}
+            <div class="account-page__loyalty-enroll">
+              <div class="account-page__enroll-content">
+                {%- render 'icon-star' -%}
+                <h2 class="account-page__section-title">{{ 'loyalty.enroll_heading' | t }}</h2>
+                <p class="account-page__enroll-description">{{ 'loyalty.enroll_description' | t }}</p>
+                <a href="/account" class="btn btn--primary">
+                  {{ 'loyalty.enroll_button' | t }}
+                </a>
+                <p class="account-page__enroll-note">{{ 'loyalty.enroll_note' | t }}</p>
+              </div>
+            </div>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- comment -%} Order history {%- endcomment -%}
+      <div class="account-page__orders">
+        <h2 class="account-page__section-title">{{ 'customer.orders.title' | t }}</h2>
+
+        {%- if customer.orders.size > 0 -%}
+          <div class="account-page__orders-table-wrap">
+            <table class="account-page__orders-table">
+              <thead>
+                <tr>
+                  <th>{{ 'customer.orders.order_number' | t }}</th>
+                  <th>{{ 'customer.orders.date' | t }}</th>
+                  <th>{{ 'customer.orders.total' | t }}</th>
+                  <th>{{ 'customer.orders.fulfillment_status' | t }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for order in customer.orders -%}
+                  <tr>
+                    <td>
+                      <a href="{{ order.customer_url }}">{{ order.name }}</a>
+                    </td>
+                    <td>{{ order.created_at | date: "%B %d, %Y" }}</td>
+                    <td>{{ order.total_price | money }}</td>
+                    <td>
+                      <span class="account-page__fulfillment-badge account-page__fulfillment-badge--{{ order.fulfillment_status | default: 'unfulfilled' | handleize }}">
+                        {{ order.fulfillment_status_label | default: 'Unfulfilled' }}
+                      </span>
+                    </td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+        {%- else -%}
+          <p class="account-page__no-orders">{{ 'customer.orders.none' | t }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Account details {%- endcomment -%}
+      <div class="account-page__details">
+        <h2 class="account-page__section-title">{{ 'customer.account.details' | t }}</h2>
+        <div class="account-page__details-grid">
+          <div class="account-page__detail">
+            <span class="account-page__detail-label">{{ 'customer.account.name' | t }}</span>
+            <span class="account-page__detail-value">{{ customer.name }}</span>
+          </div>
+          <div class="account-page__detail">
+            <span class="account-page__detail-label">{{ 'customer.account.email' | t }}</span>
+            <span class="account-page__detail-value">{{ customer.email }}</span>
+          </div>
+        </div>
+      </div>
+
+      {%- comment -%} Logout link {%- endcomment -%}
+      <div class="account-page__logout">
+        <a href="{{ routes.account_logout_url }}" class="btn btn--ghost">
+          {{ 'customer.account.log_out' | t }}
+        </a>
+      </div>
+
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Account page",
+  "tag": "section",
+  "class": "section-main-account",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_loyalty",
+      "label": "t:sections.main_account.settings.show_loyalty.label",
+      "default": true
+    }
+  ]
+}
+{% endschema %}

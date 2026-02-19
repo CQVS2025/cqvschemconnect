@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-cart",
+      "settings": {
+        "heading": "Your Cart",
+        "empty_text": "Your cart is empty",
+        "continue_text": "Continue Shopping"
+      }
+    }
+  },
+  "order": ["main"]
+}

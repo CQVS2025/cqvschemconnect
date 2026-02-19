@@ -1,0 +1,266 @@
+<footer class="footer" data-section-id="{{ section.id }}" data-section-type="footer">
+  <div class="footer__container container">
+    <div class="footer__grid">
+      {%- comment -%} Logo & Tagline Column {%- endcomment -%}
+      <div class="footer__brand">
+        <a href="/" class="footer__logo" aria-label="{{ 'general.accessibility.home' | t }}">
+          {%- if section.settings.logo_image != blank -%}
+            <img
+              src="{{ section.settings.logo_image | image_url: width: 200 }}"
+              alt="{{ shop.name }}"
+              width="200"
+              height="50"
+              loading="lazy"
+              class="footer__logo-image"
+            >
+          {%- else -%}
+            <span class="footer__logo-text">
+              <span class="footer__logo-brand">CQVS</span>
+              <span class="footer__logo-accent">{{ section.settings.logo_text | default: 'Chem Connect' }}</span>
+            </span>
+          {%- endif -%}
+        </a>
+
+        {%- if section.settings.tagline != blank -%}
+          <p class="footer__tagline">{{ section.settings.tagline }}</p>
+        {%- endif -%}
+      </div>
+
+      {%- comment -%} Navigation Links {%- endcomment -%}
+      {%- if section.settings.menu != blank -%}
+        <nav class="footer__nav" aria-label="{{ 'sections.footer.navigation' | t }}">
+          <h3 class="footer__nav-heading">{{ 'sections.footer.quick_links' | t | default: 'Quick Links' }}</h3>
+          <ul class="footer__nav-list" role="list">
+            {%- for link in linklists[section.settings.menu].links -%}
+              <li class="footer__nav-item">
+                <a href="{{ link.url }}" class="footer__nav-link">{{ link.title }}</a>
+              </li>
+            {%- endfor -%}
+          </ul>
+        </nav>
+      {%- endif -%}
+
+      {%- comment -%} Social Links (optional) {%- endcomment -%}
+      {%- if section.settings.show_social -%}
+        <div class="footer__social">
+          <h3 class="footer__social-heading">{{ 'sections.footer.follow_us' | t | default: 'Follow Us' }}</h3>
+          <div class="footer__social-links">
+            {%- if settings.social_facebook_link != blank -%}
+              <a href="{{ settings.social_facebook_link }}" class="footer__social-link" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                </svg>
+              </a>
+            {%- endif -%}
+
+            {%- if settings.social_instagram_link != blank -%}
+              <a href="{{ settings.social_instagram_link }}" class="footer__social-link" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                  <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                </svg>
+              </a>
+            {%- endif -%}
+
+            {%- if settings.social_linkedin_link != blank -%}
+              <a href="{{ settings.social_linkedin_link }}" class="footer__social-link" aria-label="LinkedIn" target="_blank" rel="noopener noreferrer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                  <rect x="2" y="9" width="4" height="12"/>
+                  <circle cx="4" cy="4" r="2"/>
+                </svg>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment -%} Copyright Bar {%- endcomment -%}
+    <div class="footer__bottom">
+      <p class="footer__copyright">
+        &copy; {{ 'now' | date: '%Y' }} {{ shop.name }}.
+        {{ 'sections.footer.all_rights_reserved' | t | default: 'All rights reserved.' }}
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background-color: var(--color-bg-card, #141414);
+    border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    padding: 3rem 0 0;
+  }
+
+  .footer__container {
+    max-width: var(--page-width, 1200px);
+    margin: 0 auto;
+    padding: 0 1.5rem;
+  }
+
+  .footer__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+    padding-bottom: 2.5rem;
+  }
+
+  @media (min-width: 768px) {
+    .footer__grid {
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 3rem;
+    }
+  }
+
+  /* Logo & Tagline */
+  .footer__logo {
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 1rem;
+  }
+
+  .footer__logo-image {
+    height: 36px;
+    width: auto;
+    object-fit: contain;
+  }
+
+  .footer__logo-text {
+    font-size: 1.375rem;
+    line-height: 1;
+  }
+
+  .footer__logo-brand {
+    font-weight: 700;
+    color: #ffffff;
+  }
+
+  .footer__logo-accent {
+    color: var(--color-accent, #00d4aa);
+    margin-left: 0.25rem;
+  }
+
+  .footer__tagline {
+    font-size: 0.875rem;
+    line-height: 1.6;
+    color: var(--color-text-muted, #b0b0b0);
+    margin: 0;
+    max-width: 320px;
+  }
+
+  /* Navigation */
+  .footer__nav-heading,
+  .footer__social-heading {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #ffffff;
+    margin: 0 0 1rem;
+  }
+
+  .footer__nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .footer__nav-item {
+    margin-bottom: 0.625rem;
+  }
+
+  .footer__nav-item:last-child {
+    margin-bottom: 0;
+  }
+
+  .footer__nav-link {
+    font-size: 0.875rem;
+    color: var(--color-text-muted, #b0b0b0);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+
+  .footer__nav-link:hover {
+    color: var(--color-accent, #00d4aa);
+  }
+
+  /* Social Links */
+  .footer__social-links {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .footer__social-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--color-text-muted, #b0b0b0);
+    text-decoration: none;
+    transition: background-color 0.2s ease, color 0.2s ease;
+  }
+
+  .footer__social-link:hover {
+    background-color: var(--color-accent, #00d4aa);
+    color: var(--color-bg-dark, #0a0a0a);
+  }
+
+  /* Bottom Bar */
+  .footer__bottom {
+    border-top: 1px solid var(--color-border, rgba(255, 255, 255, 0.1));
+    padding: 1.5rem 0;
+    text-align: center;
+  }
+
+  .footer__copyright {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted, #b0b0b0);
+    opacity: 0.7;
+    margin: 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Footer",
+  "class": "section-footer",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo_image",
+      "label": "Logo image"
+    },
+    {
+      "type": "text",
+      "id": "logo_text",
+      "label": "Logo text",
+      "default": "Chem Connect"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "Tagline",
+      "default": "Australia's chemical marketplace for concrete & quarry"
+    },
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Footer menu"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_social",
+      "label": "Show social links",
+      "default": false,
+      "info": "Social media URLs are configured in your theme settings."
+    }
+  ]
+}
+{% endschema %}
